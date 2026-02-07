@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { translations, Language } from '../utils/translations';
+import BookingConfirmation from './BookingConfirmation';
 
 interface BookingFormProps {
   selectedDate: Date;
   selectedTime: string;
   selectedTimezone: string;
   onBack: () => void;
-  onSuccess: () => void;
+  onSuccess?: () => void;
   language: Language;
 }
 
@@ -232,7 +233,7 @@ export default function BookingForm({
 }: BookingFormProps) {
   const t = translations[language];
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [step, setStep] = useState<'form' | 'confirmation'>('form');
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -251,10 +252,12 @@ export default function BookingForm({
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setStep('confirmation');
+  };
 
+  const handleConfirmBooking = async () => {
     try {
       const formattedDate = selectedDate.toISOString().split('T')[0];
       const fullPhone = `${formData.countryCode}${formData.phone}`;
@@ -281,14 +284,26 @@ export default function BookingForm({
         mode: 'no-cors',
       });
 
-      onSuccess();
+      onSuccess?.();
     } catch (error) {
       console.error('Booking error:', error);
       alert(t.bookingError);
-    } finally {
-      setIsSubmitting(false);
     }
   };
+
+  if (step === 'confirmation') {
+    return (
+      <BookingConfirmation
+        formData={formData}
+        selectedDate={selectedDate}
+        selectedTime={selectedTime}
+        selectedTimezone={selectedTimezone}
+        onEdit={() => setStep('form')}
+        onConfirm={handleConfirmBooking}
+        language={language}
+      />
+    );
+  }
 
   return (
     <div className="p-6 md:p-10 bg-black/50 rounded-xl shadow-xl max-w-3xl mx-auto">
