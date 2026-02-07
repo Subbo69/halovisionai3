@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   TrendingUp,
   MessageSquare,
@@ -17,6 +17,19 @@ interface ServicesProps {
 export default function Services({ onAskAIClick, language }: ServicesProps) {
   const t = translations[language];
   const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
+  const bgRef = useRef<HTMLDivElement>(null);
+
+  // Parallax effect for background
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!bgRef.current) return;
+      // Opposite direction to hero (move up instead of down)
+      bgRef.current.style.transform = `translateY(${-window.scrollY * 0.5}px)`;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const services = [
     {
@@ -56,10 +69,19 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
   };
 
   return (
-    <section className="relative py-20 bg-black text-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="relative py-20 overflow-hidden">
+      {/* Background Image */}
+      <div
+        ref={bgRef}
+        className="absolute inset-0 hero-bg will-change-transform"
+      />
+
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/50 pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
             {t.servicesTitle}
           </h2>
           <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
@@ -78,20 +100,22 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
                 onClick={() => toggleCard(index)}
                 className="
                   backdrop-blur-md
-                  bg-white/5
+                  bg-white/10
                   border border-white/20
                   rounded-2xl
                   p-6
-                  hover:bg-white/10
+                  hover:bg-white/20
                   transition-colors
                   cursor-pointer
+                  relative
+                  z-10
                 "
               >
                 {/* HEADER ROW */}
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
                     <Icon className="w-8 h-8 text-white flex-shrink-0" />
-                    <h3 className="text-xl font-bold leading-snug">
+                    <h3 className="text-xl font-bold leading-snug text-white">
                       {service.title}
                     </h3>
                   </div>
@@ -134,6 +158,24 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
           })}
         </div>
       </div>
+
+      {/* Background CSS */}
+      <style>{`
+        .hero-bg {
+          background-image: url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg');
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center top; /* show top instead of center */
+          width: 100%;
+          height: 120%;
+        }
+
+        @media (max-width: 768px) {
+          .hero-bg {
+            background-position: center 20%;
+          }
+        }
+      `}</style>
     </section>
   );
 }
