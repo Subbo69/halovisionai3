@@ -21,8 +21,9 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
 
           {/* LOGO */}
           <div
-            className="cursor-pointer hover:opacity-80 transition-opacity whitespace-nowrap"
+            className="cursor-pointer hover:opacity-80 transition-opacity"
             onClick={onBookingClick}
+            style={{ marginLeft: '-8px' }} // ✅ Pulls logo more to the left
           >
             <span
               className="text-white font-bold select-none text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
@@ -30,7 +31,6 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
                 fontFamily: 'Anurati, sans-serif',
                 letterSpacing: '0.02em',
                 textShadow: '0 2px 12px rgba(0,0,0,0.55)',
-                whiteSpace: 'nowrap',
               }}
             >
               HALOVISION AI
