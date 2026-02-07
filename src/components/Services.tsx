@@ -65,7 +65,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
             backgroundRepeat: 'no-repeat',
             backgroundSize: '200%',       // 🔹 zoomed in 200%
             backgroundPosition: 'center',
-            transform: 'scaleX(-1)',      // 🔹 mirrored horizontally
+            transform: 'scaleX(-100)',      // 🔹 mirrored horizontally
             transformOrigin: 'center',
           }}
         />
