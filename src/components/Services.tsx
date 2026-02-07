@@ -104,11 +104,15 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
         />
       </div>
 
-      {/* Shared Background for seamless effect */}
+      {/* Shared Background for seamless effect - extends beyond boundaries */}
       <div className="absolute inset-0 w-full h-full z-[-1] overflow-hidden">
         <div
-          className="absolute inset-0 w-full h-full transition-transform duration-75 ease-out"
+          className="absolute w-full h-full transition-transform duration-75 ease-out"
           style={{
+            top: '-10px',
+            bottom: '-10px',
+            left: '-10px',
+            right: '-10px',
             backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
@@ -118,10 +122,14 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
           }}
         />
         
-        {/* Smooth Black gradient overlay - more color stops to prevent banding */}
+        {/* Smooth Black gradient overlay - extends beyond boundaries */}
         <div
-          className="absolute inset-0"
+          className="absolute w-full h-full"
           style={{
+            top: '-10px',
+            bottom: '-10px',
+            left: '-10px',
+            right: '-10px',
             background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.4) 15%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.8) 75%, rgba(0,0,0,0.9) 85%, rgba(0,0,0,1) 100%)',
           }}
         />
