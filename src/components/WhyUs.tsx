@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Users, Zap, ChevronDown } from 'lucide-react';
 import { translations, Language } from '../utils/translations';
 
@@ -9,25 +9,42 @@ interface WhyUsProps {
 export default function WhyUs({ language }: WhyUsProps) {
   const t = translations[language];
   const [expandedReason, setExpandedReason] = useState<number | null>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+
+  /* 🔁 PARALLAX EFFECT */
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!bgRef.current) return;
+      // multiplier 0.5, slightly slower than scroll
+      bgRef.current.style.transform = `translateY(${window.scrollY * 0.5 - 100}px)`; 
+      // -100px to make it slightly higher up
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <section className="relative py-20 overflow-hidden">
-      {/* Background image */}
+      {/* Background Image with Parallax */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-fixed"
+        ref={bgRef}
+        className="absolute inset-0 bg-cover bg-center will-change-transform"
         style={{
-          backgroundImage: "url('https://i.postimg.cc/jS3wwWnS/unnamed.jpg')",
+          backgroundImage:
+            "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
+          zIndex: -1,
         }}
-      ></div>
+      />
 
       {/* Overlay for readability */}
-      <div className="absolute inset-0 bg-white/50"></div>
+      <div className="absolute inset-0 bg-white/20"></div>
 
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left: Reasons */}
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-black">
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white drop-shadow-lg">
               {t.whyUsTitle}
             </h2>
 
@@ -40,7 +57,7 @@ export default function WhyUs({ language }: WhyUsProps) {
                     key={index}
                     className="
                       backdrop-blur-md
-                      bg-white
+                      bg-white/80
                       border border-white/60
                       rounded-2xl
                       p-4
@@ -76,9 +93,7 @@ export default function WhyUs({ language }: WhyUsProps) {
                         <button
                           className="flex items-center gap-2 text-sm text-gray-600 hover:text-black transition-colors mt-2"
                         >
-                          <span>
-                            {isExpanded ? t.close : 'Open'}
-                          </span>
+                          <span>{isExpanded ? t.close : 'Open'}</span>
                           <ChevronDown
                             className={`w-4 h-4 transition-transform duration-300 ${
                               isExpanded ? 'rotate-180' : ''
@@ -93,7 +108,7 @@ export default function WhyUs({ language }: WhyUsProps) {
             </div>
           </div>
 
-          {/* Right: Founder info (unchanged) */}
+          {/* Right: Founder info */}
           <div className="backdrop-blur-md bg-white/80 border border-white/70 rounded-3xl p-8 shadow-xl">
             <div className="mb-6">
               <div className="flex items-center gap-6 mb-6">
