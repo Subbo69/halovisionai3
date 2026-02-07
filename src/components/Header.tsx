@@ -25,11 +25,11 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
             onClick={onBookingClick}
           >
             <span
-              className="text-white font-bold select-none text-2xl sm:text-3xl md:text-4xl lg:text-5xl drop-shadow-lg"
+              className="text-white font-bold select-none text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
               style={{
                 fontFamily: 'Anurati, sans-serif',
                 letterSpacing: '0.02em',
-                display: 'inline-block',
+                textShadow: '0 2px 12px rgba(0,0,0,0.55)',
                 whiteSpace: 'nowrap',
               }}
             >
@@ -44,7 +44,10 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
             <div className="relative">
               <button
                 onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                className="flex items-center gap-1 text-white hover:opacity-70 transition-opacity text-sm md:text-base drop-shadow"
+                className="flex items-center gap-1 text-white text-sm md:text-base transition-opacity hover:opacity-80"
+                style={{
+                  textShadow: '0 1px 8px rgba(0,0,0,0.6)',
+                }}
               >
                 <span>{language.toUpperCase()}</span>
                 <ChevronDown className="w-3 h-3" />
@@ -56,7 +59,7 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
                     className="fixed inset-0 z-40"
                     onClick={() => setShowLanguageMenu(false)}
                   />
-                  <div className="absolute top-full right-0 mt-2 bg-black/80 backdrop-blur-md rounded-lg shadow-lg py-2 min-w-[100px] z-50">
+                  <div className="absolute top-full right-0 mt-2 bg-black/80 backdrop-blur-md rounded-lg shadow-xl py-2 min-w-[100px] z-50">
                     {(['en', 'de', 'fr'] as Language[]).map((lang) => (
                       <button
                         key={lang}
@@ -78,17 +81,29 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
             <button
               onClick={onBookingClick}
               className="
-                text-white border border-white/60
-                px-3 md:px-6 py-2 md:py-3 rounded-full
+                relative text-white
+                px-3 md:px-6 py-2 md:py-3
+                rounded-full
                 flex items-center gap-2
-                hover:bg-white hover:text-black
+                text-xs md:text-base
+                whitespace-nowrap
                 transition-all duration-300
-                text-xs md:text-base whitespace-nowrap
-                drop-shadow
+                hover:bg-white hover:text-black
               "
+              style={{
+                border: '1px solid rgba(255,255,255,0.65)',
+                boxShadow:
+                  '0 4px 14px rgba(0,0,0,0.35), inset 0 0 0 rgba(255,255,255,0)',
+              }}
             >
-              <span>{t.letsTalk}</span>
-              <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
+              <span
+                style={{
+                  textShadow: '0 1px 6px rgba(0,0,0,0.55)',
+                }}
+              >
+                {t.letsTalk}
+              </span>
+              <ArrowRight className="w-3 h-3 md:w-4 md:h-4 drop-shadow" />
             </button>
 
           </div>
