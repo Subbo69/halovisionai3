@@ -60,7 +60,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
         style={{
           backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
           backgroundRepeat: 'no-repeat',
-          backgroundSize: '200%',
+          backgroundSize: '150%',
           backgroundPosition: 'center',
         }}
       />
