@@ -62,6 +62,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
           backgroundRepeat: 'no-repeat',
           backgroundSize: '170%',
           backgroundPosition: 'center 40%',
+          transform: scaleX(-1);
         }}
       />
 
