@@ -1,94 +1,117 @@
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { translations, Language } from '../utils/translations';
-import { useEffect, useRef } from 'react';
 
-interface HeroProps {
+interface HeaderProps {
   onBookingClick: () => void;
-  onAskAIClick: () => void;
   language: Language;
+  onLanguageChange: (lang: Language) => void;
 }
 
-export default function Hero({ onBookingClick, onAskAIClick, language }: HeroProps) {
+export default function Header({ onBookingClick, language, onLanguageChange }: HeaderProps) {
   const t = translations[language];
-  const bgRef = useRef<HTMLDivElement>(null);
-
-  /* 🔁 PARALLAX EFFECT */
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!bgRef.current) return;
-      bgRef.current.style.transform = `translateY(${window.scrollY * 0.75}px)`;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-36 md:pt-40 pb-16 overflow-hidden bg-white">
-      {/* Background Image ONLY */}
-      <div ref={bgRef} className="hero-bg absolute inset-0 will-change-transform" />
+    <>
+      <link href="https://fonts.cdnfonts.com/css/anurati" rel="stylesheet" />
 
-      <div className="relative max-w-7xl mx-auto px-4 md:px-6 w-full text-center flex flex-col items-center">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight text-white mt-10 drop-shadow-lg">
-          {t.heroTitle}
-        </h1>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-transparent">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-5 flex items-center justify-between">
 
-        <p className="text-xl md:text-2xl text-white/90 max-w-3xl mb-14 drop-shadow-md">
-          {t.heroSubtitle}
-        </p>
-
-        {/* 🎥 VIDEO */}
-        <div className="w-full max-w-4xl mb-12 mt-6">
+          {/* LOGO */}
           <div
-            className="relative w-full overflow-hidden rounded-3xl shadow-2xl"
-            style={{ paddingBottom: '56.25%' }}
+            className="cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={onBookingClick}
           >
-            <iframe
-              src="https://www.kapwing.com/e/69626d81f38c02bfe76a52c0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-              referrerPolicy="strict-origin"
-              title="Hero Video"
-              className="absolute inset-0 w-full h-full border-0"
-            />
+            <span
+              className="
+                text-white font-bold
+                select-none
+                text-xl sm:text-2xl md:text-3xl lg:text-4xl
+                tracking-[0.15em]
+              "
+              style={{
+                fontFamily: 'Anurati, sans-serif',
+                textShadow: '0 2px 12px rgba(0,0,0,0.55)',
+              }}
+            >
+              HALOVISION AI
+            </span>
+          </div>
+
+          {/* RIGHT SIDE */}
+          <div className="flex items-center gap-4 md:gap-6">
+            
+            {/* LANGUAGE SELECTOR */}
+            <div className="relative">
+              <button
+                onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                className="flex items-center gap-1 text-white text-sm md:text-base transition-opacity hover:opacity-80"
+                style={{
+                  textShadow: '0 1px 8px rgba(0,0,0,0.6)',
+                }}
+              >
+                <span>{language.toUpperCase()}</span>
+                <ChevronDown className="w-3 h-3" />
+              </button>
+
+              {showLanguageMenu && (
+                <>
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setShowLanguageMenu(false)}
+                  />
+                  <div className="absolute top-full right-0 mt-2 bg-black/80 backdrop-blur-md rounded-lg shadow-xl py-2 min-w-[100px] z-50">
+                    {(['en', 'de', 'fr'] as Language[]).map((lang) => (
+                      <button
+                        key={lang}
+                        onClick={() => {
+                          onLanguageChange(lang);
+                          setShowLanguageMenu(false);
+                        }}
+                        className="block w-full px-3 py-2 text-left text-white hover:bg-white/10 text-xs"
+                      >
+                        {lang.toUpperCase()}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* CTA BUTTON */}
+            <button
+              onClick={onBookingClick}
+              className="
+                relative text-white
+                px-4 md:px-6 py-2 md:py-3
+                rounded-full
+                flex items-center gap-2
+                text-xs md:text-base
+                whitespace-nowrap
+                transition-all duration-300
+                hover:bg-white hover:text-black
+              "
+              style={{
+                border: '1px solid rgba(255,255,255,0.65)',
+                boxShadow:
+                  '0 4px 14px rgba(0,0,0,0.35), inset 0 0 0 rgba(255,255,255,0)',
+              }}
+            >
+              <span
+                style={{
+                  textShadow: '0 1px 6px rgba(0,0,0,0.55)',
+                }}
+              >
+                {t.letsTalk}
+              </span>
+              <ArrowRight className="w-3 h-3 md:w-4 md:h-4 drop-shadow" />
+            </button>
+
           </div>
         </div>
-
-        <div className="flex justify-center mb-6 w-full">
-          <button
-            onClick={onBookingClick}
-            className="bg-black text-white px-8 py-4 rounded-full text-lg flex items-center gap-3 shadow-lg hover:bg-gray-800 transition-transform hover:scale-[1.06]"
-          >
-            <span>{t.startJourney}</span>
-            <ArrowRight className="w-5 h-5" />
-          </button>
-        </div>
-
-        <button
-          onClick={onAskAIClick}
-          className="text-white flex items-center gap-2 hover:text-white/70 transition-colors text-[130%] drop-shadow"
-        >
-          <Sparkles className="w-4 h-4" />
-          <span>{t.askAI}</span>
-        </button>
-      </div>
-
-      <style>{`
-        .hero-bg {
-          background-image: url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg');
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-position: center;
-          width: 100%;
-          height: 110%;
-        }
-
-        @media (max-width: 768px) {
-          .hero-bg {
-            background-position: center 35%;
-          }
-        }
-      `}</style>
-    </section>
+      </header>
+    </>
   );
 }
