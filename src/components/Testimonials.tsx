@@ -52,10 +52,10 @@ export default function Testimonials() {
         </h3>
 
         <div className="relative flex items-center justify-center">
-          {/* Left fade — more aggressive and wider */}
-          <div className="absolute left-0 top-0 h-full w-24 pointer-events-none bg-gradient-to-r from-black/80 to-transparent z-20" />
-          {/* Right fade — more aggressive and wider */}
-          <div className="absolute right-0 top-0 h-full w-24 pointer-events-none bg-gradient-to-l from-black/80 to-transparent z-20" />
+          {/* Left fade — smaller on mobile, larger on desktop */}
+          <div className="absolute left-0 top-0 h-full w-8 sm:w-12 md:w-16 lg:w-24 pointer-events-none bg-gradient-to-r from-black/80 to-transparent z-20" />
+          {/* Right fade — smaller on mobile, larger on desktop */}
+          <div className="absolute right-0 top-0 h-full w-8 sm:w-12 md:w-16 lg:w-24 pointer-events-none bg-gradient-to-l from-black/80 to-transparent z-20" />
 
           {/* Scroll Left */}
           <button
@@ -91,7 +91,7 @@ export default function Testimonials() {
                     <h4 className="text-white font-bold text-lg">{review.name}</h4>
                     <p className="text-gray-300 text-sm">{review.role}</p>
                   </div>
-                  <a
+                  
                     href={review.linkedIn}
                     target="_blank"
                     rel="noopener noreferrer"
