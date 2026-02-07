@@ -54,19 +54,20 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
 
   return (
     <section className="relative py-20 text-white overflow-hidden">
-      {/* Blurry Gradient Background */}
+      {/* Dark Gradient Background */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{
           backgroundImage: `
             linear-gradient(
               135deg,
-              rgba(128, 0, 128, 0.7) 0%,   /* Purple top-left */
-              rgba(255, 165, 0, 0.6) 40%,  /* Orange slightly lower right */
-              rgba(0,0,0,0.95) 100%         /* Fully black at bottom */
+              rgba(50, 0, 50, 1) 0%,     /* Dark purple top-left */
+              rgba(120, 60, 0, 1) 40%,   /* Dark orange slightly lower right */
+              rgba(0,0,0,1) 100%          /* Full black at bottom */
             )
           `,
-          filter: 'blur(20px)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
           zIndex: -1,
         }}
       />
@@ -91,11 +92,10 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
                 key={index}
                 onClick={() => toggleCard(index)}
                 className="
-                  backdrop-blur-md
-                  bg-white/5
+                  bg-white/5        /* Slight transparency, no white halo */
                   rounded-2xl
                   p-6
-                  hover:bg-white/10
+                  hover:bg-white/10 /* Slight hover effect */
                   transition-colors
                   cursor-pointer
                 "
