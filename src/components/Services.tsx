@@ -61,7 +61,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
           alt=""
           style={{
             width: '170%',
-            height: '170%',
+            height: '200%',
             objectFit: 'cover',
             objectPosition: 'center',
             position: 'absolute',
