@@ -20,13 +20,11 @@ export default function WhyUs({ language }: WhyUsProps) {
         }}
       ></div>
 
-      {/* Removed the white overlay for full brightness */}
-
       <div className="relative max-w-7xl mx-auto px-6 z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left: Reasons */}
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-black">
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white drop-shadow-lg">
               {t.whyUsTitle}
             </h2>
 
@@ -39,12 +37,12 @@ export default function WhyUs({ language }: WhyUsProps) {
                     key={index}
                     className="
                       backdrop-blur-md
-                      bg-white
-                      border border-white/60
+                      bg-gray-200/20
+                      border border-white/30
                       rounded-2xl
                       p-4
-                      shadow-xl shadow-black/20
-                      hover:shadow-2xl hover:shadow-black/30
+                      shadow-xl shadow-black/30
+                      hover:shadow-2xl hover:shadow-black/40
                       transition-all
                       cursor-pointer
                     "
@@ -58,7 +56,7 @@ export default function WhyUs({ language }: WhyUsProps) {
                       </div>
 
                       <div className="flex-1">
-                        <p className="text-lg text-gray-800 font-bold">
+                        <p className="text-lg text-white font-bold drop-shadow">
                           {reason}
                         </p>
 
@@ -67,13 +65,13 @@ export default function WhyUs({ language }: WhyUsProps) {
                             isExpanded ? 'max-h-96 mt-3' : 'max-h-0'
                           }`}
                         >
-                          <p className="text-gray-700 leading-relaxed">
+                          <p className="text-white/90 leading-relaxed drop-shadow">
                             {t.reasonsDesc[index]}
                           </p>
                         </div>
 
                         <button
-                          className="flex items-center gap-2 text-sm text-gray-600 hover:text-black transition-colors mt-2"
+                          className="flex items-center gap-2 text-sm text-white/80 hover:text-white drop-shadow transition-colors mt-2"
                         >
                           <span>{isExpanded ? t.close : 'Open'}</span>
                           <ChevronDown
@@ -91,7 +89,7 @@ export default function WhyUs({ language }: WhyUsProps) {
           </div>
 
           {/* Right: Founder info */}
-          <div className="backdrop-blur-md bg-white/80 border border-white/70 rounded-3xl p-8 shadow-xl">
+          <div className="backdrop-blur-md bg-gray-200/20 border border-white/30 rounded-3xl p-8 shadow-xl shadow-black/30">
             <div className="mb-6">
               <div className="flex items-center gap-6 mb-6">
                 <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg hover:scale-105 transition-transform duration-300">
@@ -106,15 +104,17 @@ export default function WhyUs({ language }: WhyUsProps) {
                   />
                 </div>
                 <div>
-                  <Users className="w-12 h-12 text-black mb-2" />
-                  <h3 className="text-3xl font-bold">{t.customBuilt}</h3>
+                  <Users className="w-12 h-12 text-white drop-shadow mb-2" />
+                  <h3 className="text-3xl font-bold text-white drop-shadow">
+                    {t.customBuilt}
+                  </h3>
                 </div>
               </div>
 
-              <p className="text-gray-600 mb-6">{t.customBuiltDesc}</p>
-              <p className="text-gray-600 mb-6">{t.dashboardDesc}</p>
+              <p className="text-white/90 mb-6 drop-shadow">{t.customBuiltDesc}</p>
+              <p className="text-white/90 mb-6 drop-shadow">{t.dashboardDesc}</p>
 
-              <div className="flex items-center gap-2 text-gray-500">
+              <div className="flex items-center gap-2 text-white/80 drop-shadow">
                 <Zap className="w-5 h-5" />
                 <span>{t.rapidDeployment}</span>
               </div>
