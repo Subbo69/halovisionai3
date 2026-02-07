@@ -17,7 +17,8 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
       <link href="https://fonts.cdnfonts.com/css/anurati" rel="stylesheet" />
 
       <header className="fixed top-0 left-0 right-0 z-50 bg-transparent">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-5 flex items-center justify-between">
+        {/* Full-width container */}
+        <div className="w-full flex items-center justify-between px-6 md:px-12 py-4 md:py-5">
 
           {/* LOGO */}
           <div
@@ -29,7 +30,7 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
                 text-white font-bold
                 select-none
                 text-xl sm:text-2xl md:text-3xl lg:text-4xl
-                tracking-[0.15em]
+                tracking-[0.2em]
               "
               style={{
                 fontFamily: 'Anurati, sans-serif',
@@ -42,7 +43,7 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
 
           {/* RIGHT SIDE */}
           <div className="flex items-center gap-4 md:gap-6">
-            
+
             {/* LANGUAGE SELECTOR */}
             <div className="relative">
               <button
@@ -96,7 +97,7 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
               style={{
                 border: '1px solid rgba(255,255,255,0.65)',
                 boxShadow:
-                  '0 4px 14px rgba(0,0,0,0.35), inset 0 0 0 rgba(255,255,255,0)',
+                  '0 2px 6px rgba(0,0,0,0.35)',
               }}
             >
               <span
