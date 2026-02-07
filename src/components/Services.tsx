@@ -18,6 +18,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
   const t = translations[language];
   const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [sectionScroll, setSectionScroll] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +26,9 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercent = (scrollTop / docHeight) * 100;
       setScrollProgress(scrollPercent);
+      
+      // Calculate zoom based on scroll position
+      setSectionScroll(scrollTop);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -84,8 +88,11 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
     linePosition = 100 - easeInOutCubic(progress) * 100;
   }
 
+  // Parallax zoom effect: zoom out as you scroll down
+  const zoomScale = 1 + (sectionScroll * 0.0003); // Subtle zoom effect
+
   return (
-    <section className="relative py-20 text-white overflow-hidden min-h-screen">
+    <section className="relative py-12 md:py-20 text-white overflow-hidden">
       {/* Animated top border line - scroll controlled */}
       <div className="absolute top-0 left-0 w-full h-1 overflow-hidden z-10">
         <div
@@ -100,13 +107,13 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
       {/* Shared Background for seamless effect */}
       <div className="absolute inset-0 w-full h-full z-[-1] overflow-hidden">
         <div
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 w-full h-full transition-transform duration-75 ease-out"
           style={{
             backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            transform: 'scaleX(-1)',
+            transform: `scaleX(-1) scale(${zoomScale})`,
             transformOrigin: 'center',
           }}
         />
@@ -121,7 +128,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-6">
-        <div className="text-center mb-12 md:mb-16">
+        <div className="text-center mb-8 md:mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 drop-shadow-lg">
             {t.servicesTitle}
           </h2>
@@ -130,7 +137,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 items-start pb-8 md:pb-12">
           {services.map((service, index) => {
             const Icon = service.icon;
             const isExpanded = expandedCards.has(index);
