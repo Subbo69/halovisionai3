@@ -77,14 +77,12 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
             left: '50%',
             top: '50%',
             transform: `translate(-50%, -50%) translateY(${scrollY * 0.5}px) scaleX(-1)`,
-            filter: 'blur(8px)',
           }}
         />
-        {/* Glassy overlay */}
+        {/* Dark overlay */}
         <div 
           className="absolute inset-0" 
           style={{
-            backdropFilter: 'blur(4px)',
             backgroundColor: 'rgba(0, 0, 0, 0.3)',
           }}
         />
