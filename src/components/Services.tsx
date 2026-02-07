@@ -54,12 +54,12 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
 
   return (
     <section className="relative py-20 text-white overflow-hidden">
-      {/* Glassy Background with Dark Gradient */}
+      {/* Background Image with Dark Gradient */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{
           backgroundImage: `
-            linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%),
+            linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%),
             url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')
           `,
           backgroundSize: 'cover',
@@ -90,10 +90,10 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
                 onClick={() => toggleCard(index)}
                 className="
                   backdrop-blur-md
-                  bg-white/10
+                  bg-white/5
                   rounded-2xl
                   p-6
-                  hover:bg-white/20
+                  hover:bg-white/10
                   transition-colors
                   cursor-pointer
                 "
