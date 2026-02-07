@@ -24,7 +24,7 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-36 md:pt-40 pb-16 overflow-hidden bg-white">
+    <section className="relative min-h-screen flex flex-col items-center justify-center pt-36 md:pt-40 pb-16 overflow-hidden">
       {/* Background Image ONLY */}
       <div ref={bgRef} className="hero-bg absolute inset-0 will-change-transform" />
 
@@ -50,6 +50,7 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
               referrerPolicy="strict-origin"
               title="Hero Video"
               className="absolute inset-0 w-full h-full border-0"
+              muted
             />
           </div>
         </div>
