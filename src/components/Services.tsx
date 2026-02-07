@@ -54,19 +54,46 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
 
   return (
     <section className="relative py-20 text-white overflow-hidden">
+      {/* Animated top border line */}
+      <div className="absolute top-0 left-0 w-full h-1 overflow-hidden z-10">
+        <div
+          className="absolute h-full w-32 bg-gradient-to-r from-transparent via-white to-transparent"
+          style={{
+            animation: 'slideLight 3s ease-in-out infinite',
+          }}
+        />
+      </div>
+
+      <style>{`
+        @keyframes slideLight {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(calc(100vw + 100%));
+          }
+        }
+      `}</style>
+
       {/* Shared Background for seamless effect */}
-      <div
-        className="absolute inset-0 w-full h-full z-[-1] overflow-hidden"
-      >
+      <div className="absolute inset-0 w-full h-full z-[-1] overflow-hidden">
         <div
           className="absolute inset-0"
           style={{
             backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
             backgroundRepeat: 'no-repeat',
-            backgroundSize: '200%',       // 🔹 zoomed in 200%
+            backgroundSize: '200%',
             backgroundPosition: 'center',
-            transform: 'scaleX(-1)',      // 🔹 mirrored horizontally
+            transform: 'scaleX(-1)',
             transformOrigin: 'center',
+          }}
+        />
+        
+        {/* Black gradient overlay - darker towards bottom */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,1) 100%)',
           }}
         />
       </div>
