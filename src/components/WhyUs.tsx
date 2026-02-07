@@ -112,19 +112,26 @@ export default function WhyUs({ language }: WhyUsProps) {
                 </div>
               </div>
 
-              {/* Collapsible content - only on mobile */}
-              <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  isFounderExpanded ? 'max-h-96' : 'max-h-0'
-                } lg:max-h-none`}
-              >
-                <p className="text-white/90 mb-6 drop-shadow">{t.customBuiltDesc}</p>
-                <p className="text-white/90 mb-6 drop-shadow">{t.dashboardDesc}</p>
+              {/* Collapsible content with fade preview on mobile */}
+              <div className="relative">
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    isFounderExpanded ? 'max-h-96' : 'max-h-16'
+                  } lg:max-h-none`}
+                >
+                  <p className="text-white/90 mb-6 drop-shadow">{t.customBuiltDesc}</p>
+                  <p className="text-white/90 mb-6 drop-shadow">{t.dashboardDesc}</p>
 
-                <div className="flex items-center gap-2 text-white/80 drop-shadow">
-                  <Zap className="w-5 h-5" />
-                  <span>{t.rapidDeployment}</span>
+                  <div className="flex items-center gap-2 text-white/80 drop-shadow">
+                    <Zap className="w-5 h-5" />
+                    <span>{t.rapidDeployment}</span>
+                  </div>
                 </div>
+
+                {/* Gradient fade overlay - only visible on mobile when collapsed */}
+                {!isFounderExpanded && (
+                  <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-gray-200/20 to-transparent pointer-events-none lg:hidden" />
+                )}
               </div>
 
               {/* Open/Close button - only visible on mobile */}
