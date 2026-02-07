@@ -196,9 +196,8 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
         ref={buttonRef}
         onClick={toggleChat}
         className="fixed bottom-6 left-6 z-50 flex items-center gap-2 rounded-full
-                   px-4 py-3 backdrop-blur-sm border border-white/20
-                   bg-gradient-to-r from-purple-500/30 via-pink-400/30 to-orange-400/30
-                   shadow-md hover:shadow-lg transition-all hover:scale-110 text-white font-semibold"
+                   px-4 py-3 border border-white text-white
+                   backdrop-blur-sm transition-all hover:scale-110 font-semibold"
         aria-label="Open chat"
       >
         <MessageSquare className="w-6 h-6" />
@@ -211,14 +210,14 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
           ref={chatRef}
           className={`fixed bottom-24 left-6 z-50 w-11/12 max-w-[24rem]
           h-[400px] md:h-[600px]
-          flex flex-col backdrop-blur-xl bg-black/70 border border-white/30
-          rounded-3xl shadow-[0_0_25px_rgba(0,0,0,0.6)] overflow-hidden
+          flex flex-col backdrop-blur-xl bg-transparent border border-white rounded-3xl
+          shadow-md overflow-hidden
           transform transition-all duration-300 ease-out
           ${animateOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
         `}
         >
           {/* HEADER */}
-          <div className="bg-black/90 text-white p-4 flex items-center justify-between rounded-t-3xl">
+          <div className="bg-black/80 text-white p-4 flex items-center justify-between rounded-t-3xl">
             <div>
               <div
                 className="font-bold select-none"
@@ -250,7 +249,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
                   className={`max-w-[80%] p-3 rounded-2xl ${
                     message.role === 'user'
                       ? 'bg-black text-white'
-                      : 'bg-white/20 text-white border border-white/30'
+                      : 'bg-transparent text-white border border-white'
                   }`}
                 >
                   {message.content}
@@ -267,7 +266,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
                     <button
                       key={index}
                       onClick={() => handleSend(rec)}
-                      className="bg-white/20 text-white border border-white/30 p-3 rounded-2xl hover:bg-white/30 text-left text-sm"
+                      className="bg-transparent text-white border border-white p-3 rounded-2xl hover:bg-white/10 text-left text-sm"
                     >
                       {rec}
                     </button>
@@ -277,7 +276,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
 
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-white/20 text-white border border-white/30 p-3 rounded-2xl">
+                <div className="bg-transparent text-white border border-white p-3 rounded-2xl">
                   <Loader2 className="w-5 h-5 animate-spin" />
                 </div>
               </div>
@@ -287,7 +286,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
           </div>
 
           {/* INPUT */}
-          <div className="p-4 bg-black/50 border-t border-white/30 flex items-end gap-2 rounded-b-3xl">
+          <div className="p-4 bg-transparent border-t border-white flex items-end gap-2 rounded-b-3xl">
             <textarea
               ref={inputRef}
               value={input}
@@ -296,12 +295,12 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
               rows={1}
               style={{ lineHeight: '1.25rem' }}
               placeholder={placeholderText}
-              className="flex-1 px-4 py-2 rounded-full border border-white/30 focus:outline-none focus:ring-2 focus:ring-white/40 bg-white/10 text-white resize-none overflow-y-auto max-h-10"
+              className="flex-1 px-4 py-2 rounded-full border border-white focus:outline-none focus:ring-2 focus:ring-white bg-transparent text-white resize-none overflow-y-auto max-h-10"
             />
             <button
               onClick={() => handleSend()}
               disabled={isLoading || !input.trim()}
-              className="bg-purple-600/40 text-white p-2 rounded-full hover:bg-purple-500/50 disabled:opacity-50"
+              className="bg-transparent text-white border border-white p-2 rounded-full hover:bg-white/10 disabled:opacity-50"
             >
               <Send className="w-5 h-5" />
             </button>
