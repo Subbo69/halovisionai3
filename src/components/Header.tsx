@@ -18,7 +18,7 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
 
       <header className="fixed top-0 left-0 right-0 z-50 bg-transparent">
         {/* Full-width container */}
-        <div className="w-full flex items-center justify-between px-20 md:px-40 py-4 md:py-5">
+        <div className="w-full flex items-center justify-between px-10 md:px-40 py-4 md:py-5">
 
           {/* LOGO */}
           <div
