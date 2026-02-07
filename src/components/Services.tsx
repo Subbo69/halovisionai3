@@ -55,18 +55,19 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
   return (
     <section className="relative py-20 text-white overflow-hidden">
       {/* Shared Background for seamless effect */}
-      <div
-        className="absolute inset-0 w-full h-full z-[-1] overflow-hidden"
-      >
-        <div
-          className="absolute inset-0"
+      <div className="absolute inset-0 w-full h-full z-[-1] overflow-hidden">
+        <img
+          src="https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg"
+          alt=""
           style={{
-            backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '170%',       // 🔹 zoomed in 200%
-            backgroundPosition: 'center',
-            transform: 'scaleX(-100)',      // 🔹 mirrored horizontally
-            transformOrigin: 'center',
+            width: '170%',
+            height: '170%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%) scaleX(-1)',
           }}
         />
       </div>
