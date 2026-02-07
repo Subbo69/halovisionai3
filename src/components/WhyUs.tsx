@@ -9,6 +9,7 @@ interface WhyUsProps {
 export default function WhyUs({ language }: WhyUsProps) {
   const t = translations[language];
   const [expandedReason, setExpandedReason] = useState<number | null>(null);
+  const [isFounderExpanded, setIsFounderExpanded] = useState(false);
 
   return (
     <section className="relative py-20 overflow-hidden">
@@ -111,13 +112,33 @@ export default function WhyUs({ language }: WhyUsProps) {
                 </div>
               </div>
 
-              <p className="text-white/90 mb-6 drop-shadow">{t.customBuiltDesc}</p>
-              <p className="text-white/90 mb-6 drop-shadow">{t.dashboardDesc}</p>
+              {/* Collapsible content - only on mobile */}
+              <div
+                className={`overflow-hidden transition-all duration-300 ${
+                  isFounderExpanded ? 'max-h-96' : 'max-h-0'
+                } lg:max-h-none`}
+              >
+                <p className="text-white/90 mb-6 drop-shadow">{t.customBuiltDesc}</p>
+                <p className="text-white/90 mb-6 drop-shadow">{t.dashboardDesc}</p>
 
-              <div className="flex items-center gap-2 text-white/80 drop-shadow">
-                <Zap className="w-5 h-5" />
-                <span>{t.rapidDeployment}</span>
+                <div className="flex items-center gap-2 text-white/80 drop-shadow">
+                  <Zap className="w-5 h-5" />
+                  <span>{t.rapidDeployment}</span>
+                </div>
               </div>
+
+              {/* Open/Close button - only visible on mobile */}
+              <button
+                className="flex items-center gap-2 text-sm text-white/80 hover:text-white drop-shadow transition-colors mt-2 lg:hidden"
+                onClick={() => setIsFounderExpanded(!isFounderExpanded)}
+              >
+                <span>{isFounderExpanded ? t.close : 'Open'}</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-300 ${
+                    isFounderExpanded ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
             </div>
           </div>
         </div>
