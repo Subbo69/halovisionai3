@@ -54,8 +54,16 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
 
   return (
     <section className="relative py-20 text-white overflow-hidden">
-      {/* No background here, fully transparent */}
-      <div className="absolute inset-0 w-full h-full" style={{ background: 'transparent', zIndex: -1 }} />
+      {/* Shared Background for seamless effect */}
+      <div
+        className="absolute inset-0 w-full h-full z-[-1]"
+        style={{
+          backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
 
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
