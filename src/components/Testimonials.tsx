@@ -52,27 +52,27 @@ export default function Testimonials() {
         </h3>
 
         <div className="relative flex items-center justify-center">
-          {/* Left fade */}
-          <div className="absolute left-0 top-0 h-full w-12 pointer-events-none bg-gradient-to-r from-black/40 to-transparent z-20" />
-          {/* Right fade */}
-          <div className="absolute right-0 top-0 h-full w-12 pointer-events-none bg-gradient-to-l from-black/40 to-transparent z-20" />
+          {/* Left fade — more aggressive and wider */}
+          <div className="absolute left-0 top-0 h-full w-24 pointer-events-none bg-gradient-to-r from-black/80 to-transparent z-20" />
+          {/* Right fade — more aggressive and wider */}
+          <div className="absolute right-0 top-0 h-full w-24 pointer-events-none bg-gradient-to-l from-black/80 to-transparent z-20" />
 
           {/* Scroll Left */}
           <button
             onClick={() => scroll('left')}
-            className="absolute left-2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-md p-3 rounded-full transition-colors shadow-lg"
+            className="absolute left-2 z-30 transition-colors hover:text-gray-300"
             aria-label="Scroll left"
           >
-            <ChevronLeft className="w-6 h-6 text-white" />
+            <ChevronLeft className="w-8 h-8 text-white" />
           </button>
 
           {/* Scroll Right */}
           <button
             onClick={() => scroll('right')}
-            className="absolute right-2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-md p-3 rounded-full transition-colors shadow-lg"
+            className="absolute right-2 z-30 transition-colors hover:text-gray-300"
             aria-label="Scroll right"
           >
-            <ChevronRight className="w-6 h-6 text-white" />
+            <ChevronRight className="w-8 h-8 text-white" />
           </button>
 
           {/* Reviews */}
