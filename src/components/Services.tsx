@@ -70,8 +70,8 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   };
 
-  // Alternate direction: 0-50% goes left to right, 50-100% goes right to left
-  const normalizedProgress = (scrollProgress % 100) / 100;
+  // Slower animation: complete cycle every 150% of scroll instead of 100%
+  const normalizedProgress = ((scrollProgress % 150) / 150);
   let linePosition;
   
   if (normalizedProgress < 0.5) {
@@ -89,7 +89,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
       {/* Animated top border line - scroll controlled */}
       <div className="absolute top-0 left-0 w-full h-1 overflow-hidden z-10">
         <div
-          className="absolute h-full w-32 bg-gradient-to-r from-transparent via-white to-transparent transition-all duration-100 ease-out"
+          className="absolute h-full w-48 bg-gradient-to-r from-transparent via-white to-transparent transition-all duration-100 ease-out"
           style={{
             left: `${linePosition}%`,
             transform: 'translateX(-50%)',
