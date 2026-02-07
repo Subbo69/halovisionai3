@@ -45,7 +45,8 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
           <button
             onClick={onBookingClick}
             className="relative bg-white text-black px-8 py-4 rounded-full text-lg font-semibold flex items-center gap-3
-            hover:bg-gray-100 transition-colors shadow-lg"
+              hover:bg-gray-100 hover:scale-105 active:scale-95 active:shadow-inner
+              transition-all duration-200 ease-out shadow-lg"
           >
             <span>{t.bookCall}</span>
             <ArrowRight className="w-5 h-5" />
