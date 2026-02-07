@@ -15,9 +15,8 @@ export default function WhyUs({ language }: WhyUsProps) {
   useEffect(() => {
     const handleScroll = () => {
       if (!bgRef.current) return;
-      // multiplier 0.5, slightly slower than scroll
-      bgRef.current.style.transform = `translateY(${window.scrollY * 0.5 - 100}px)`; 
-      // -100px to make it slightly higher up
+      // multiplier 0.5 and slight offset
+      bgRef.current.style.transform = `translateY(${window.scrollY * 0.5 - 100}px)`;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -29,18 +28,17 @@ export default function WhyUs({ language }: WhyUsProps) {
       {/* Background Image with Parallax */}
       <div
         ref={bgRef}
-        className="absolute inset-0 bg-cover bg-center will-change-transform"
+        className="absolute inset-0 w-full h-full bg-cover bg-center will-change-transform"
         style={{
-          backgroundImage:
-            "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
-          zIndex: -1,
+          backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
+          zIndex: -10,
         }}
       />
 
       {/* Overlay for readability */}
-      <div className="absolute inset-0 bg-white/20"></div>
+      <div className="absolute inset-0 bg-white/20 z-0"></div>
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto px-6 z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left: Reasons */}
           <div>
