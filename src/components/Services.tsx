@@ -54,18 +54,17 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
 
   return (
     <section className="relative py-20 text-white overflow-hidden">
-      {/* Dark Gradient Background */}
+      {/* Background with Purple → Orange/Red + Black vertical gradient */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{
           backgroundImage: `
-            linear-gradient(
-              135deg,
-              rgba(50, 0, 50, 1) 0%,     /* Dark purple top-left */
-              rgba(120, 60, 0, 1) 40%,   /* Dark orange slightly lower right */
-              rgba(0,0,0,1) 100%          /* Full black at bottom */
-            )
+            /* Horizontal black gradient (top -> bottom) */
+            linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%),
+            /* Diagonal purple → orange/red gradient */
+            linear-gradient(135deg, rgba(128,0,128,0.8) 60%, rgba(255,69,0,0.7) 40%)
           `,
+          backgroundBlendMode: 'overlay',
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
           zIndex: -1,
