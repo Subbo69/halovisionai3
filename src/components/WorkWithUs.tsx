@@ -90,16 +90,16 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
           <div 
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
-              padding: '2px',
-              transform: 'scale(1.12)',
+              padding: '1px',
+              transform: 'scale(1.06)', // Closer to button (was 1.12)
             }}
           >
             {/* Bright head of the shooting star */}
             <div
               className="absolute w-full h-full rounded-full"
               style={{
-                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 82%, rgba(255,255,255,0.3) 86%, rgba(255,255,255,0.8) 89%, #ffffff 91%, #ffffff 92%, rgba(255,255,255,0.8) 93%, rgba(255,255,255,0.3) 95%, transparent 98%)`,
-                filter: 'blur(0.5px)',
+                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 85%, rgba(255,255,255,0.2) 88%, rgba(255,255,255,0.7) 90%, #ffffff 91.5%, #ffffff 92%, rgba(255,255,255,0.7) 93%, rgba(255,255,255,0.2) 95%, transparent 97%)`,
+                filter: 'blur(0.3px)',
                 opacity: lightOpacity,
               }}
             />
@@ -107,7 +107,7 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
             <div
               className="absolute w-full h-full rounded-full"
               style={{
-                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 88%, rgba(255,255,255,0.9) 91%, #ffffff 92%, rgba(255,255,255,0.9) 93%, transparent 96%)`,
+                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 89%, rgba(255,255,255,0.9) 91%, #ffffff 92%, rgba(255,255,255,0.9) 93%, transparent 95%)`,
                 filter: 'blur(0px)',
                 opacity: lightOpacity * 1.2,
               }}
