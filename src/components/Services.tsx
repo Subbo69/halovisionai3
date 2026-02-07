@@ -56,16 +56,20 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
     <section className="relative py-20 text-white overflow-hidden">
       {/* Shared Background for seamless effect */}
       <div
-        className="absolute inset-0 w-full h-full z-[-1]"
-        style={{
-          backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: '150%',       // 🔹 zoomed in 150%
-          backgroundPosition: 'center', 
-          transform: 'scaleX(-1)',      // 🔹 mirrored horizontally
-          transformOrigin: 'center',    // ensures the mirroring is centered
-        }}
-      />
+        className="absolute inset-0 w-full h-full z-[-1] overflow-hidden"
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '200%',       // 🔹 zoomed in 200%
+            backgroundPosition: 'center',
+            transform: 'scaleX(-1)',      // 🔹 mirrored horizontally
+            transformOrigin: 'center',
+          }}
+        />
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
@@ -87,10 +91,10 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
                 key={index}
                 onClick={() => toggleCard(index)}
                 className="
-                  bg-white/5        /* Slight transparency for card itself */
+                  bg-white/5
                   rounded-2xl
                   p-6
-                  hover:bg-white/10 /* Slight hover effect */
+                  hover:bg-white/10
                   transition-colors
                   cursor-pointer
                 "
