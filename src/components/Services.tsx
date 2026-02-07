@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   TrendingUp,
   MessageSquare,
@@ -17,6 +17,19 @@ interface ServicesProps {
 export default function Services({ onAskAIClick, language }: ServicesProps) {
   const t = translations[language];
   const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      setScrollProgress(scrollPercent);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const services = [
     {
@@ -52,28 +65,37 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
     setExpandedCards(newSet);
   };
 
+  // Calculate position with easing (smooth acceleration/deceleration)
+  const easeInOutCubic = (t: number) => {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  };
+
+  // Alternate direction: 0-50% goes left to right, 50-100% goes right to left
+  const normalizedProgress = (scrollProgress % 100) / 100;
+  let linePosition;
+  
+  if (normalizedProgress < 0.5) {
+    // First half: left to right (0% to 100%)
+    const progress = normalizedProgress * 2; // normalize to 0-1
+    linePosition = easeInOutCubic(progress) * 100;
+  } else {
+    // Second half: right to left (100% to 0%)
+    const progress = (normalizedProgress - 0.5) * 2; // normalize to 0-1
+    linePosition = 100 - easeInOutCubic(progress) * 100;
+  }
+
   return (
     <section className="relative py-20 text-white overflow-hidden">
-      {/* Animated top border line */}
+      {/* Animated top border line - scroll controlled */}
       <div className="absolute top-0 left-0 w-full h-1 overflow-hidden z-10">
         <div
-          className="absolute h-full w-32 bg-gradient-to-r from-transparent via-white to-transparent"
+          className="absolute h-full w-32 bg-gradient-to-r from-transparent via-white to-transparent transition-all duration-100 ease-out"
           style={{
-            animation: 'slideLight 3s ease-in-out infinite',
+            left: `${linePosition}%`,
+            transform: 'translateX(-50%)',
           }}
         />
       </div>
-
-      <style>{`
-        @keyframes slideLight {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(calc(100vw + 100%));
-          }
-        }
-      `}</style>
 
       {/* Shared Background for seamless effect */}
       <div className="absolute inset-0 w-full h-full z-[-1] overflow-hidden">
