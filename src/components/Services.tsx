@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import {
   TrendingUp,
   MessageSquare,
@@ -17,19 +17,6 @@ interface ServicesProps {
 export default function Services({ onAskAIClick, language }: ServicesProps) {
   const t = translations[language];
   const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
-  const bgRef = useRef<HTMLDivElement>(null);
-
-  // Parallax effect for background
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!bgRef.current) return;
-      // Opposite direction to hero (move up instead of down)
-      bgRef.current.style.transform = `translateY(${-window.scrollY * 0.5}px)`;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const services = [
     {
@@ -60,31 +47,31 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
 
   const toggleCard = (index: number) => {
     const newSet = new Set(expandedCards);
-    if (newSet.has(index)) {
-      newSet.delete(index);
-    } else {
-      newSet.add(index);
-    }
+    if (newSet.has(index)) newSet.delete(index);
+    else newSet.add(index);
     setExpandedCards(newSet);
   };
 
   return (
-    <section className="relative py-20 overflow-hidden">
-      {/* Background Image */}
+    <section className="relative py-20 text-white overflow-hidden">
+      {/* Glassy Background */}
       <div
-        ref={bgRef}
-        className="absolute inset-0 hero-bg will-change-transform"
+        className="absolute inset-0 w-full h-full"
+        style={{
+          backgroundImage: `url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
+          filter: 'blur(15px) brightness(0.35)',
+          zIndex: -1,
+        }}
       />
-
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/50 pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
             {t.servicesTitle}
           </h2>
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto drop-shadow-sm">
             {t.servicesSubtitle}
           </p>
         </div>
@@ -107,15 +94,13 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
                   hover:bg-white/20
                   transition-colors
                   cursor-pointer
-                  relative
-                  z-10
                 "
               >
                 {/* HEADER ROW */}
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
                     <Icon className="w-8 h-8 text-white flex-shrink-0" />
-                    <h3 className="text-xl font-bold leading-snug text-white">
+                    <h3 className="text-xl font-bold leading-snug drop-shadow">
                       {service.title}
                     </h3>
                   </div>
@@ -138,7 +123,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
                     ${isExpanded ? 'max-h-96 mt-4' : 'max-h-0'}
                   `}
                 >
-                  <p className="text-gray-200 mb-4 leading-relaxed">
+                  <p className="text-white/80 mb-4 leading-relaxed drop-shadow-sm">
                     {service.description}
                   </p>
 
@@ -147,7 +132,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
                       e.stopPropagation();
                       onAskAIClick(service.context);
                     }}
-                    className="text-sm flex items-center gap-2 text-white/80 hover:text-white transition-colors"
+                    className="text-sm flex items-center gap-2 text-white/70 hover:text-white transition-colors"
                   >
                     <Sparkles className="w-4 h-4" />
                     <span>Ask Our AI Agent</span>
@@ -158,24 +143,6 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
           })}
         </div>
       </div>
-
-      {/* Background CSS */}
-      <style>{`
-        .hero-bg {
-          background-image: url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg');
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-position: center top; /* show top instead of center */
-          width: 100%;
-          height: 120%;
-        }
-
-        @media (max-width: 768px) {
-          .hero-bg {
-            background-position: center 20%;
-          }
-        }
-      `}</style>
     </section>
   );
 }
