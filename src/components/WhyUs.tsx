@@ -20,10 +20,9 @@ export default function WhyUs({ language }: WhyUsProps) {
         }}
       ></div>
 
-      {/* Overlay for readability */}
-      <div className="absolute inset-0 bg-white/50"></div>
+      {/* Removed the white overlay for full brightness */}
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto px-6 z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left: Reasons */}
           <div>
