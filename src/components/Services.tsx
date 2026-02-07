@@ -79,13 +79,13 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
   let linePosition;
   
   if (normalizedProgress < 0.5) {
-    // First half: left to right (0% to 100%)
+    // First half: left to right (-10% to 110% to ensure full coverage)
     const progress = normalizedProgress * 2; // normalize to 0-1
-    linePosition = easeInOutCubic(progress) * 100;
+    linePosition = -10 + (easeInOutCubic(progress) * 120);
   } else {
-    // Second half: right to left (100% to 0%)
+    // Second half: right to left (110% to -10%)
     const progress = (normalizedProgress - 0.5) * 2; // normalize to 0-1
-    linePosition = 100 - easeInOutCubic(progress) * 100;
+    linePosition = 110 - (easeInOutCubic(progress) * 120);
   }
 
   // Parallax zoom effect: zoom out as you scroll down
@@ -96,7 +96,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
       {/* Animated top border line - scroll controlled */}
       <div className="absolute top-0 left-0 w-full h-1 overflow-hidden z-10">
         <div
-          className="absolute h-full w-32 md:w-48 bg-gradient-to-r from-transparent via-white to-transparent transition-all duration-100 ease-out"
+          className="absolute h-full w-40 md:w-48 bg-gradient-to-r from-transparent via-white to-transparent transition-all duration-100 ease-out"
           style={{
             left: `${linePosition}%`,
             transform: 'translateX(-50%)',
