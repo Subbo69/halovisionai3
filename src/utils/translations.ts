@@ -5,6 +5,7 @@ export const translations = {
     letsTalk: "Let's Talk",
     startJourney: "Start Your AI Journey",
     askAI: "Test Our AI Agent",
+    askHaloAI: "Ask Halo AI",
     automated: "Automated",
     custom: "Custom",
     scalable: "Scalable",
@@ -37,11 +38,11 @@ export const translations = {
       "We embrace cutting-edge AI tech and automation strategies that traditional agencies haven't adopted yet.",
       "We stay motivated and deeply interested in understanding your business to deliver the best outcomes.",
       "From n8n and Make.com to Bolt.ai, Lovable, and advanced LLMs like GPT-4 and Claude, we master all tools that drive real automation.",
-      "Get real-time insights into your automations’ progress and performance. Dashboards provide clear views of increased productivity."
+      "Get real-time insights into your automations' progress and performance. Dashboards provide clear views of increased productivity."
     ],
     customBuilt: "Jayden Mikus",
     customBuiltDesc:
-      "I’m Jayden Mikus from Liechtenstein. I know AI automations and tools like n8n inside out. I grew up with tech and social media and gained 1M YouTube views in 4 months through editing. I know a lot about AI, future tech, and social media.",
+      "I'm Jayden Mikus from Liechtenstein. I know AI automations and tools like n8n inside out. I grew up with tech and social media and gained 1M YouTube views in 4 months through editing. I know a lot about AI, future tech, and social media.",
     rapidDeployment:
       "Focus on growth while your AI handles operations automatically",
     workWithUs: "Work with us",
@@ -122,6 +123,7 @@ export const translations = {
     letsTalk: "Kontakt",
     startJourney: "Starte deine KI-Reise",
     askAI: "Teste unseren KI-Agenten",
+    askHaloAI: "Frag Halo AI",
     automated: "Automatisiert",
     custom: "Individuell",
     scalable: "Skalierbar",
@@ -213,6 +215,7 @@ export const translations = {
     letsTalk: "Parlons-en",
     startJourney: "Commencez votre voyage IA",
     askAI: "Testez notre agent IA",
+    askHaloAI: "Demandez à Halo AI",
     automated: "Automatisé",
     custom: "Personnalisé",
     scalable: "Évolutif",
@@ -233,7 +236,7 @@ export const translations = {
       "Automatisez les campagnes et optimisez les conversions.",
     saveTime: "Gagner du temps",
     saveTimeDesc:
-      "Automatisez les tâches répétitives et concentrez-vous sur l’essentiel.",
+      "Automatisez les tâches répétitives et concentrez-vous sur l'essentiel.",
     whyUsTitle: "Pourquoi nous",
     testimonialsTitle: "Témoignages",
     clientReviewsTitle: "Avis clients",
