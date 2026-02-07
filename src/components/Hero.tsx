@@ -24,21 +24,20 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 md:pt-28 pb-16 overflow-hidden bg-white">
+    <section className="relative min-h-screen flex flex-col items-center justify-center pt-36 md:pt-40 pb-16 overflow-hidden bg-white">
       {/* Background Image ONLY */}
       <div ref={bgRef} className="hero-bg absolute inset-0 will-change-transform" />
 
-      <div className="relative max-w-7xl mx-auto px-4 md:px-6 w-full text-center flex flex-col items-center -mt-4">
-        {/* Titles slightly higher */}
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-white drop-shadow-lg">
+      <div className="relative max-w-7xl mx-auto px-4 md:px-6 w-full text-center flex flex-col items-center">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight text-white mt-10 drop-shadow-lg">
           {t.heroTitle}
         </h1>
 
-        <p className="text-xl md:text-2xl text-white/90 max-w-3xl mb-10 drop-shadow-md">
+        <p className="text-xl md:text-2xl text-white/90 max-w-3xl mb-14 drop-shadow-md">
           {t.heroSubtitle}
         </p>
 
-        {/* 🎥 VIDEO — autoplay muted */}
+        {/* 🎥 VIDEO — 7% smaller */}
         <div className="w-full mb-12 mt-6" style={{ maxWidth: '93%' }}>
           <div
             className="relative w-full overflow-hidden rounded-3xl shadow-2xl"
@@ -51,7 +50,6 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
               referrerPolicy="strict-origin"
               title="Hero Video"
               className="absolute inset-0 w-full h-full border-0"
-              muted
             />
           </div>
         </div>
