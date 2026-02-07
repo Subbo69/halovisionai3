@@ -30,6 +30,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
   useEffect(scrollToBottom, [messages]);
 
   useEffect(() => {
@@ -71,10 +72,12 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
     setIsOpen(true);
     setTimeout(() => setAnimateOpen(true), 10);
   };
+
   const closeChat = () => {
     setAnimateOpen(false);
     setTimeout(() => setIsOpen(false), 300);
   };
+
   const toggleChat = () => {
     isOpen ? closeChat() : openChat();
   };
@@ -192,18 +195,14 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
       <button
         ref={buttonRef}
         onClick={toggleChat}
-        className="fixed bottom-6 left-6 z-50 flex items-center gap-2 rounded-full shadow-[0_0_0px_rgba(255,255,255,0.8)] hover:shadow-[0_0_30px_rgba(255,255,255,1)] transition-all hover:scale-110 px-4 py-3"
-        style={{
-          background: 'linear-gradient(135deg, rgba(168,85,247,0.85), rgba(249,115,22,0.85))',
-          backdropFilter: 'blur(10px)',
-          color: 'white',
-        }}
+        className="fixed bottom-6 left-6 z-50 flex items-center gap-2 rounded-full
+                   px-4 py-3 backdrop-blur-sm border border-white/20
+                   bg-gradient-to-r from-purple-500/30 via-pink-400/30 to-orange-400/30
+                   shadow-md hover:shadow-lg transition-all hover:scale-110 text-white font-semibold"
         aria-label="Open chat"
       >
-        <MessageSquare className="w-7 h-7 drop-shadow-md" />
-        <span className="whitespace-nowrap font-semibold text-sm drop-shadow-sm">
-          Ask Halo
-        </span>
+        <MessageSquare className="w-6 h-6" />
+        <span>Ask Halo</span>
       </button>
 
       {/* CHAT WINDOW */}
@@ -212,7 +211,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
           ref={chatRef}
           className={`fixed bottom-24 left-6 z-50 w-11/12 max-w-[24rem]
           h-[400px] md:h-[600px]
-          flex flex-col backdrop-blur-xl bg-black/80 border border-white/30
+          flex flex-col backdrop-blur-xl bg-black/70 border border-white/30
           rounded-3xl shadow-[0_0_25px_rgba(0,0,0,0.6)] overflow-hidden
           transform transition-all duration-300 ease-out
           ${animateOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
@@ -251,7 +250,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
                   className={`max-w-[80%] p-3 rounded-2xl ${
                     message.role === 'user'
                       ? 'bg-black text-white'
-                      : 'bg-gray-800/70 text-white border border-white/20'
+                      : 'bg-white/20 text-white border border-white/30'
                   }`}
                 >
                   {message.content}
@@ -268,7 +267,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
                     <button
                       key={index}
                       onClick={() => handleSend(rec)}
-                      className="bg-gray-800/70 text-white border border-white/20 p-3 rounded-2xl hover:bg-gray-800/90 text-left text-sm"
+                      className="bg-white/20 text-white border border-white/30 p-3 rounded-2xl hover:bg-white/30 text-left text-sm"
                     >
                       {rec}
                     </button>
@@ -278,7 +277,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
 
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-gray-800/70 text-white border border-white/20 p-3 rounded-2xl">
+                <div className="bg-white/20 text-white border border-white/30 p-3 rounded-2xl">
                   <Loader2 className="w-5 h-5 animate-spin" />
                 </div>
               </div>
@@ -288,7 +287,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
           </div>
 
           {/* INPUT */}
-          <div className="p-4 bg-gray-900/70 border-t border-white/20 flex items-end gap-2 rounded-b-3xl">
+          <div className="p-4 bg-black/50 border-t border-white/30 flex items-end gap-2 rounded-b-3xl">
             <textarea
               ref={inputRef}
               value={input}
@@ -297,12 +296,12 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
               rows={1}
               style={{ lineHeight: '1.25rem' }}
               placeholder={placeholderText}
-              className="flex-1 px-4 py-2 rounded-full border border-gray-700 focus:outline-none focus:ring-2 focus:ring-white bg-gray-800/60 resize-none overflow-y-auto max-h-10 text-white"
+              className="flex-1 px-4 py-2 rounded-full border border-white/30 focus:outline-none focus:ring-2 focus:ring-white/40 bg-white/10 text-white resize-none overflow-y-auto max-h-10"
             />
             <button
               onClick={() => handleSend()}
               disabled={isLoading || !input.trim()}
-              className="bg-black text-white p-2 rounded-full hover:bg-gray-800 disabled:opacity-50"
+              className="bg-purple-600/40 text-white p-2 rounded-full hover:bg-purple-500/50 disabled:opacity-50"
             >
               <Send className="w-5 h-5" />
             </button>
