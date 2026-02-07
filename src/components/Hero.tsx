@@ -83,7 +83,7 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
 
       <style>{`
         .hero-bg {
-          background-image: url('https://i.ibb.co/zh3Ss37n/Chat-GPT-Image-Feb-7-2026-06-35-44-PM.png');
+          background-image: url('https://example.com/path/to/your/downloaded-image.jpg');
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center;
