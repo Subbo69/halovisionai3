@@ -1,316 +1,155 @@
-import { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { Users, Zap, ChevronDown } from 'lucide-react';
 import { translations, Language } from '../utils/translations';
 
-interface ChatBotProps {
-  context: string;
-  onContextUsed: () => void;
+interface WhyUsProps {
   language: Language;
 }
 
-export default function ChatBot({ context, onContextUsed, language }: ChatBotProps) {
+export default function WhyUs({ language }: WhyUsProps) {
   const t = translations[language];
+  const [expandedReason, setExpandedReason] = useState<number | null>(null);
+  const [isFounderExpanded, setIsFounderExpanded] = useState(false);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [animateOpen, setAnimateOpen] = useState(false);
-  const [messages, setMessages] = useState<
-    Array<{ role: 'user' | 'assistant'; content: string }>
-  >([{ role: 'assistant', content: t.chatGreeting }]);
-  const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [recommendations, setRecommendations] = useState<string[]>([]);
-  const [longMessagesSent, setLongMessagesSent] = useState(0);
-  const [limitWarning, setLimitWarning] = useState<string | null>(null);
-
-  const chatRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const inputRef = useRef<HTMLTextAreaElement>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(scrollToBottom, [messages]);
-
-  useEffect(() => {
-    setMessages([{ role: 'assistant', content: t.chatGreeting }]);
-  }, [language]);
-
-  useEffect(() => {
-    if (context) {
-      openChat();
-      const recs =
-        t.chatRecommendations?.[context as keyof typeof t.chatRecommendations] ||
-        t.chatRecommendations?.general ||
-        [];
-      setRecommendations(recs);
-      onContextUsed();
-    }
-  }, [context, onContextUsed, t]);
-
-  useEffect(() => {
-    if (isOpen) inputRef.current?.focus();
-  }, [isOpen]);
-
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        chatRef.current &&
-        !chatRef.current.contains(e.target as Node) &&
-        !buttonRef.current?.contains(e.target as Node)
-      ) {
-        closeChat();
-      }
-    }
-    if (isOpen) document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isOpen]);
-
-  /* ---------- OPEN / CLOSE ---------- */
-  const openChat = () => {
-    setIsOpen(true);
-    setTimeout(() => setAnimateOpen(true), 10);
-  };
-
-  const closeChat = () => {
-    setAnimateOpen(false);
-    setTimeout(() => setIsOpen(false), 300);
-  };
-
-  const toggleChat = () => {
-    isOpen ? closeChat() : openChat();
-  };
-
-  /* ---------- SEND ---------- */
-  const handleSend = async (message?: string) => {
-    const userMessage = message || input.trim();
-    if (!userMessage || isLoading) return;
-
-    setInput('');
-    setRecommendations([]);
-    setLimitWarning(null);
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
-
-    if (userMessage.length > 500) setLongMessagesSent(prev => prev + 1);
-
-    setIsLoading(true);
-
-    try {
-      const history = [...messages, { role: 'user', content: userMessage }].slice(-10);
-
-      const response = await fetch(
-        'https://n8n.halo-vision.com/webhook/halovisionchatbot99',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: history }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Webhook error: ${response.status} ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      console.log('Webhook raw data:', data);
-
-      let assistantMessage = '';
-
-      if (Array.isArray(data) && data.length > 0) {
-        assistantMessage =
-          data[0]?.json?.response ||
-          data[0]?.json?.message ||
-          data[0]?.json?.output ||
-          JSON.stringify(data[0]?.json || '');
-      } else if (typeof data === 'object') {
-        assistantMessage =
-          data?.response ||
-          data?.message ||
-          data?.output ||
-          data?.text ||
-          JSON.stringify(data);
-      } else if (typeof data === 'string') {
-        assistantMessage = data;
-      }
-
-      if (!assistantMessage) {
-        assistantMessage = t.chatError || 'No response received.';
-      }
-
-      const cleanMessage = assistantMessage
-        .replace(/<[^>]*>/g, '')
-        .replace(/\*\*/g, '')
-        .replace(/#+/g, '')
-        .replace(/[`>]/g, '')
-        .trim();
-
-      setMessages(prev => [...prev, { role: 'assistant', content: cleanMessage }]);
-    } catch (error) {
-      console.error('Chat error:', error);
-      setMessages(prev => [
-        ...prev,
-        { role: 'assistant', content: t.chatError || 'Oops! Something went wrong.' },
-      ]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  /* ---------- INPUT ---------- */
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setInput(value);
-
-    const limit = longMessagesSent < 2 ? 2000 : 500;
-    setLimitWarning(value.length > limit ? t.chatCharLimit || 'Character limit reached.' : null);
-
-    if (inputRef.current) {
-      inputRef.current.style.height = 'auto';
-      inputRef.current.style.height = Math.min(inputRef.current.scrollHeight, 40) + 'px';
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      if (!limitWarning) handleSend();
-    }
-  };
-
-  const placeholderText =
-    t.chatInputPlaceholder ||
-    (language === 'de'
-      ? 'Frage unseren KI-Agenten'
-      : language === 'fr'
-      ? 'Posez votre question'
-      : 'Any questions?');
-
-  /* ---------- RENDER ---------- */
   return (
-    <>
-      <link href="https://fonts.cdnfonts.com/css/anurati" rel="stylesheet" />
+    <section className="relative py-20 overflow-hidden">
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-fixed"
+        style={{
+          backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
+        }}
+      ></div>
 
-      {/* OPEN BUTTON */}
-      <button
-        ref={buttonRef}
-        onClick={toggleChat}
-        className="fixed bottom-6 left-6 z-50 flex items-center gap-2 rounded-full
-                   px-4 py-3 border border-white text-white
-                   backdrop-blur-sm transition-all hover:scale-110 font-semibold"
-        aria-label="Open chat"
-      >
-        <MessageSquare className="w-6 h-6" />
-        <span>Ask Halo</span>
-      </button>
+      <div className="relative max-w-7xl mx-auto px-6 z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left: Reasons */}
+          <div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white drop-shadow-lg">
+              {t.whyUsTitle}
+            </h2>
 
-      {/* CHAT WINDOW */}
-      {isOpen && (
-        <div
-          ref={chatRef}
-          className={`fixed bottom-24 left-6 z-50 w-11/12 max-w-[24rem]
-          h-[400px] md:h-[600px]
-          flex flex-col backdrop-blur-xl bg-transparent border border-white rounded-3xl
-          shadow-md overflow-hidden
-          transform transition-all duration-300 ease-out
-          ${animateOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
-        `}
-        >
-          {/* HEADER */}
-          <div className="bg-black/80 text-white p-4 flex items-center justify-between rounded-t-3xl">
-            <div>
-              <div
-                className="font-bold select-none"
-                style={{
-                  fontFamily: 'Anurati, sans-serif',
-                  fontSize: '1.1rem',
-                  letterSpacing: '0.12em',
-                }}
-              >
-                HALOVISION AI
-              </div>
-              <div className="text-xs text-gray-300">{t.chatSub}</div>
+            <div className="space-y-4">
+              {t.reasons.slice(0, 4).map((reason, index) => {
+                const isExpanded = expandedReason === index;
+
+                return (
+                  <div
+                    key={index}
+                    className="
+                      backdrop-blur-md
+                      bg-gray-200/20
+                      border border-white/30
+                      rounded-2xl
+                      p-4
+                      shadow-xl shadow-black/30
+                      hover:shadow-2xl hover:shadow-black/40
+                      transition-all
+                      cursor-pointer
+                    "
+                    onClick={() =>
+                      setExpandedReason(isExpanded ? null : index)
+                    }
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center flex-shrink-0 font-bold">
+                        {index + 1}
+                      </div>
+
+                      <div className="flex-1">
+                        <p className="text-lg text-white font-bold drop-shadow">
+                          {reason}
+                        </p>
+
+                        <div
+                          className={`overflow-hidden transition-all duration-300 ${
+                            isExpanded ? 'max-h-96 mt-3' : 'max-h-0'
+                          }`}
+                        >
+                          <p className="text-white/90 leading-relaxed drop-shadow">
+                            {t.reasonsDesc[index]}
+                          </p>
+                        </div>
+
+                        <button
+                          className="flex items-center gap-2 text-sm text-white/80 hover:text-white drop-shadow transition-colors mt-2"
+                        >
+                          <span>{isExpanded ? t.close : 'Open'}</span>
+                          <ChevronDown
+                            className={`w-4 h-4 transition-transform duration-300 ${
+                              isExpanded ? 'rotate-180' : ''
+                            }`}
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-            <button onClick={closeChat} className="hover:bg-white/20 p-2 rounded-full">
-              <X className="w-5 h-5" />
-            </button>
           </div>
 
-          {/* MESSAGES */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${
-                  message.role === 'user' ? 'justify-end' : 'justify-start'
-                }`}
-              >
+          {/* Right: Founder info */}
+          <div className="backdrop-blur-md bg-gray-200/20 border border-white/30 rounded-3xl p-8 shadow-xl shadow-black/30">
+            <div className="mb-6">
+              <div className="flex items-center gap-6 mb-6">
+                <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg hover:scale-105 transition-transform duration-300">
+                  <img
+                    src="https://i.postimg.cc/sDfZC0mH/Screenshot-20260102-094201-(1)-(1)-(1)-(1).png"
+                    alt="Founder"
+                    className="w-full h-full object-cover"
+                    style={{
+                      transform: 'scale(1.2)',
+                      objectPosition: 'center 41%',
+                    }}
+                  />
+                </div>
+                <div>
+                  <Users className="w-12 h-12 text-white drop-shadow mb-2" />
+                  <h3 className="text-3xl font-bold text-white drop-shadow">
+                    {t.customBuilt}
+                  </h3>
+                </div>
+              </div>
+
+              {/* Collapsible content with fade preview on mobile */}
+              <div className="relative">
                 <div
-                  className={`max-w-[80%] p-3 rounded-2xl ${
-                    message.role === 'user'
-                      ? 'bg-black text-white'
-                      : 'bg-transparent text-white border border-white'
-                  }`}
+                  className={`overflow-hidden transition-all duration-300 ${
+                    isFounderExpanded ? 'max-h-96' : 'max-h-16'
+                  } lg:max-h-none`}
                 >
-                  {message.content}
+                  <p className="text-white/90 mb-6 drop-shadow">{t.customBuiltDesc}</p>
+                  <p className="text-white/90 mb-6 drop-shadow">{t.dashboardDesc}</p>
+
+                  <div className="flex items-center gap-2 text-white/80 drop-shadow">
+                    <Zap className="w-5 h-5" />
+                    <span>{t.rapidDeployment}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
 
-            {recommendations.length > 0 && !isLoading && (
-              <div className="flex flex-col gap-2">
-                <div className="text-xs text-gray-300 text-center">{t.suggestions}</div>
-                {recommendations
-                  .slice(0, window.innerWidth < 768 ? 1 : 3)
-                  .map((rec, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleSend(rec)}
-                      className="bg-transparent text-white border border-white p-3 rounded-2xl hover:bg-white/10 text-left text-sm"
-                    >
-                      {rec}
-                    </button>
-                  ))}
+                {/* Gradient fade overlay - only visible on mobile when collapsed */}
+                {!isFounderExpanded && (
+                  <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-gray-200/20 to-transparent pointer-events-none lg:hidden" />
+                )}
               </div>
-            )}
 
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-transparent text-white border border-white p-3 rounded-2xl">
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                </div>
-              </div>
-            )}
-
-            <div ref={messagesEndRef} />
+              {/* Open/Close button - only visible on mobile */}
+              <button
+                className="flex items-center gap-2 text-sm text-white/80 hover:text-white drop-shadow transition-colors mt-2 lg:hidden"
+                onClick={() => setIsFounderExpanded(!isFounderExpanded)}
+              >
+                <span>{isFounderExpanded ? t.close : 'Open'}</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-300 ${
+                    isFounderExpanded ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+            </div>
           </div>
-
-          {/* INPUT */}
-          <div className="p-4 bg-transparent border-t border-white flex items-end gap-2 rounded-b-3xl">
-            <textarea
-              ref={inputRef}
-              value={input}
-              onChange={handleInputChange}
-              onKeyPress={handleKeyPress}
-              rows={1}
-              style={{ lineHeight: '1.25rem' }}
-              placeholder={placeholderText}
-              className="flex-1 px-4 py-2 rounded-full border border-white focus:outline-none focus:ring-2 focus:ring-white bg-transparent text-white resize-none overflow-y-auto max-h-10"
-            />
-            <button
-              onClick={() => handleSend()}
-              disabled={isLoading || !input.trim()}
-              className="bg-transparent text-white border border-white p-2 rounded-full hover:bg-white/10 disabled:opacity-50"
-            >
-              <Send className="w-5 h-5" />
-            </button>
-          </div>
-
-          {limitWarning && (
-            <div className="text-xs text-red-500 text-center pb-2">{limitWarning}</div>
-          )}
         </div>
-      )}
-    </>
+      </div>
+    </section>
   );
 }
