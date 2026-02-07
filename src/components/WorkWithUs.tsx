@@ -1,111 +1,151 @@
-import { ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import {
+  TrendingUp,
+  MessageSquare,
+  BarChart3,
+  Clock,
+  Sparkles,
+  ChevronDown,
+} from 'lucide-react';
 import { translations, Language } from '../utils/translations';
-import { useEffect, useRef, useState } from 'react';
 
-interface WorkWithUsProps {
-  onBookingClick: () => void;
+interface ServicesProps {
+  onAskAIClick: (context: string) => void;
   language: Language;
 }
 
-export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps) {
+export default function Services({ onAskAIClick, language }: ServicesProps) {
   const t = translations[language];
-  const buttonWrapperRef = useRef<HTMLDivElement>(null);
-  const [animate, setAnimate] = useState(false);
+  const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
 
-  /* ---------- Inject lightning animation ---------- */
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @keyframes lightningOrbit {
-        0% {
-          transform: rotate(0deg);
-          opacity: 0;
-        }
-        10% {
-          opacity: 1;
-        }
-        60% {
-          transform: rotate(320deg);
-        }
-        100% {
-          transform: rotate(360deg);
-          opacity: 0;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-    return () => document.head.removeChild(style);
-  }, []);
+  const services = [
+    {
+      icon: TrendingUp,
+      title: t.leadGeneration,
+      description: t.leadGenerationDesc,
+      context: 'lead-generation',
+    },
+    {
+      icon: MessageSquare,
+      title: t.customerEngagement,
+      description: t.customerEngagementDesc,
+      context: 'customer-engagement',
+    },
+    {
+      icon: BarChart3,
+      title: t.marketingAutomation,
+      description: t.marketingAutomationDesc,
+      context: 'marketing-automation',
+    },
+    {
+      icon: Clock,
+      title: t.saveTime,
+      description: t.saveTimeDesc,
+      context: 'save-time',
+    },
+  ];
 
-  /* ---------- Trigger once on scroll ---------- */
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setAnimate(true);
-          observer.disconnect(); // run only once
-        }
-      },
-      { threshold: 0.6 }
-    );
-
-    if (buttonWrapperRef.current) observer.observe(buttonWrapperRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const toggleCard = (index: number) => {
+    const newSet = new Set(expandedCards);
+    if (newSet.has(index)) newSet.delete(index);
+    else newSet.add(index);
+    setExpandedCards(newSet);
+  };
 
   return (
-    <section className="relative py-32 bg-black text-white overflow-hidden">
-      <div className="max-w-4xl mx-auto px-6 text-center">
-        <h2 className="text-5xl md:text-6xl font-bold mb-6">
-          {t.workWithUs}
-        </h2>
-        <p className="text-xl text-gray-400 mb-12">
-          {t.workWithUsDesc}
-        </p>
+    <section className="relative py-20 text-white overflow-hidden">
+      {/* Fully transparent background */}
+      <div className="absolute inset-0 -z-10" />
 
-        {/* BUTTON WRAPPER */}
-        <div ref={buttonWrapperRef} className="relative inline-block">
-          {/* LIGHTNING ORBIT */}
-          {animate && (
-            <div
-              className="absolute inset-[-6px] rounded-full pointer-events-none"
-              style={{
-                background: `
-                  conic-gradient(
-                    from 0deg,
-                    transparent 0deg,
-                    rgba(168,85,247,0.0) 40deg,
-                    rgba(168,85,247,0.9) 60deg,
-                    rgba(249,115,22,1) 90deg,
-                    rgba(249,115,22,0.0) 120deg,
-                    transparent 360deg
-                  )
-                `,
-                animation: 'lightningOrbit 0.9s cubic-bezier(0.2, 0.8, 0.3, 1) forwards',
-                filter: 'blur(1px)',
-              }}
-            />
-          )}
+      <div className="relative max-w-7xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            {t.servicesTitle}
+          </h2>
+          <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto">
+            {t.servicesSubtitle}
+          </p>
+        </div>
 
-          {/* BUTTON */}
-          <button
-            onClick={onBookingClick}
-            className="
-              relative
-              bg-white text-black
-              px-8 py-4
-              rounded-full
-              text-lg font-semibold
-              flex items-center gap-3
-              transition-all duration-200 ease-out
-              hover:scale-105
-              active:scale-95
-              shadow-xl
-            "
-          >
-            <span>{t.bookCall}</span>
-            <ArrowRight className="w-5 h-5" />
-          </button>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            const isExpanded = expandedCards.has(index);
+
+            return (
+              <div
+                key={index}
+                onClick={() => toggleCard(index)}
+                className="
+                  bg-black/40
+                  rounded-2xl
+                  p-6
+                  hover:bg-black/50
+                  transition-colors
+                  cursor-pointer
+                "
+              >
+                {/* HEADER */}
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start gap-3">
+                    <Icon className="w-8 h-8 text-white" />
+                    <h3 className="text-xl font-bold">
+                      {service.title}
+                    </h3>
+                  </div>
+
+                  <div className="flex items-center gap-1 text-sm text-white/60">
+                    <span>{isExpanded ? 'Close' : 'Open'}</span>
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${
+                        isExpanded ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </div>
+                </div>
+
+                {/* EXPAND */}
+                <div
+                  className={`
+                    overflow-hidden
+                    transition-[max-height] duration-300
+                    ${isExpanded ? 'max-h-96 mt-4' : 'max-h-0'}
+                  `}
+                >
+                  <p className="text-white/75 mb-4 leading-relaxed">
+                    {service.description}
+                  </p>
+
+                  {/* 🔥 LIGHT STRING BUTTON */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onAskAIClick(service.context);
+                    }}
+                    className="relative inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm text-white bg-black overflow-hidden"
+                  >
+                    {/* Animated border */}
+                    <span className="absolute inset-0 rounded-xl p-[1px] pointer-events-none">
+                      <span
+                        className="absolute inset-0 rounded-xl animate-spin"
+                        style={{
+                          background:
+                            'conic-gradient(from 0deg, transparent 0%, #a855f7 20%, #f97316 40%, transparent 60%)',
+                          animationDuration: '3s',
+                        }}
+                      />
+                    </span>
+
+                    {/* Inner content mask */}
+                    <span className="relative z-10 flex items-center gap-2">
+                      <Sparkles className="w-4 h-4" />
+                      Ask Our AI Agent
+                    </span>
+                  </button>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
