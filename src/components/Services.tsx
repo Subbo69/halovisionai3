@@ -54,17 +54,19 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
 
   return (
     <section className="relative py-20 text-white overflow-hidden">
-      {/* Background Image with Dark Gradient */}
+      {/* Blurry Gradient Background */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{
           backgroundImage: `
-            linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%),
-            url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')
+            linear-gradient(
+              135deg,
+              rgba(128, 0, 128, 0.7) 0%,   /* Purple top-left */
+              rgba(255, 165, 0, 0.6) 40%,  /* Orange slightly lower right */
+              rgba(0,0,0,0.95) 100%         /* Fully black at bottom */
+            )
           `,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center top',
-          filter: 'blur(15px) brightness(0.35)',
+          filter: 'blur(20px)',
           zIndex: -1,
         }}
       />
