@@ -54,11 +54,14 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
 
   return (
     <section className="relative py-20 text-white overflow-hidden">
-      {/* Glassy Background */}
+      {/* Glassy Background with Dark Gradient */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{
-          backgroundImage: `url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')`,
+          backgroundImage: `
+            linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%),
+            url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')
+          `,
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
           filter: 'blur(15px) brightness(0.35)',
@@ -88,7 +91,6 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
                 className="
                   backdrop-blur-md
                   bg-white/10
-                  border border-white/20
                   rounded-2xl
                   p-6
                   hover:bg-white/20
