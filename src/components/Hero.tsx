@@ -12,7 +12,7 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
   const t = translations[language];
   const bgRef = useRef<HTMLDivElement>(null);
 
-  /* 🔁 STRONGER PARALLAX EFFECT */
+  /* 🔁 PARALLAX EFFECT */
   useEffect(() => {
     const handleScroll = () => {
       if (!bgRef.current) return;
@@ -25,16 +25,8 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-36 md:pt-40 pb-16 overflow-hidden bg-white">
-      {/* Background Image */}
+      {/* Background Image ONLY */}
       <div ref={bgRef} className="hero-bg absolute inset-0 will-change-transform" />
-
-      {/* ✅ Bottom fade ONLY */}
-      <div
-        className="absolute bottom-0 left-0 w-full h-[35%] pointer-events-none"
-        style={{
-          background: 'linear-gradient(to bottom, rgba(255,255,255,0), #ffffff)',
-        }}
-      />
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-6 w-full text-center flex flex-col items-center">
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight text-white mt-10 drop-shadow-lg">
