@@ -11,7 +11,7 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
   const t = translations[language];
   const sectionRef = useRef<HTMLDivElement>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [animationProgress, setAnimationProgress] = useState(0);
+  const [animationProgress, setAnimationProgress] = useState(-90); // Start from top
 
   // Intersection Observer to trigger animation on scroll
   useEffect(() => {
@@ -22,22 +22,28 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
             setHasAnimated(true);
             // Start animation
             let startTime: number | null = null;
-            const duration = 2000; // 2 seconds for one complete rotation
+            const duration = 2800; // 40% slower (2000 * 1.4 = 2800ms)
 
             const animate = (timestamp: number) => {
               if (!startTime) startTime = timestamp;
               const elapsed = timestamp - startTime;
               const progress = Math.min(elapsed / duration, 1);
               
-              // Ease in-out cubic for smooth acceleration/deceleration
+              // Smoother ease in-out cubic for better acceleration/deceleration
               const eased = progress < 0.5 
                 ? 4 * progress * progress * progress 
                 : 1 - Math.pow(-2 * progress + 2, 3) / 2;
               
-              setAnimationProgress(eased * 360);
+              // Start from -90deg (top) and go to 270deg (full rotation back to top)
+              setAnimationProgress(-90 + (eased * 360));
 
               if (progress < 1) {
                 requestAnimationFrame(animate);
+              } else {
+                // After animation completes, hide the light
+                setTimeout(() => {
+                  setAnimationProgress(-90);
+                }, 100);
               }
             };
 
@@ -78,14 +84,16 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
               padding: '3px',
-              transform: 'scale(1.15)', // Make it bigger than the button
+              transform: 'scale(1.15)',
             }}
           >
             <div
               className="absolute w-full h-full rounded-full"
               style={{
-                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 60%, rgba(255,255,255,0.3) 75%, #ffffff 85%, rgba(255,255,255,0.3) 95%, transparent 100%)`,
-                filter: 'blur(2px)',
+                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 65%, rgba(255,255,255,0.4) 78%, #ffffff 85%, rgba(255,255,255,0.4) 92%, transparent 100%)`,
+                filter: 'blur(3px)',
+                opacity: hasAnimated && animationProgress > -90 ? 1 : 0,
+                transition: 'opacity 0.2s ease-out',
               }}
             />
           </div>
