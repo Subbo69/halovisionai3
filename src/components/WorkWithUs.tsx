@@ -11,27 +11,7 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
   const t = translations[language];
   const sectionRef = useRef<HTMLDivElement>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [shouldAnimate, setShouldAnimate] = useState(false);
-
-  // Inject keyframes once
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @keyframes lightSpin {
-        0% {
-          transform: rotate(0deg);
-        }
-        30% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    `;
-    document.head.appendChild(style);
-    return () => document.head.removeChild(style);
-  }, []);
+  const [animationProgress, setAnimationProgress] = useState(0);
 
   // Intersection Observer to trigger animation on scroll
   useEffect(() => {
@@ -39,13 +19,34 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimated) {
-            setShouldAnimate(true);
             setHasAnimated(true);
+            // Start animation
+            let startTime: number | null = null;
+            const duration = 2000; // 2 seconds for one complete rotation
+
+            const animate = (timestamp: number) => {
+              if (!startTime) startTime = timestamp;
+              const elapsed = timestamp - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              
+              // Ease in-out cubic for smooth acceleration/deceleration
+              const eased = progress < 0.5 
+                ? 4 * progress * progress * progress 
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+              
+              setAnimationProgress(eased * 360);
+
+              if (progress < 1) {
+                requestAnimationFrame(animate);
+              }
+            };
+
+            requestAnimationFrame(animate);
           }
         });
       },
       {
-        threshold: 0.5, // Trigger when 50% of the section is visible
+        threshold: 0.3,
       }
     );
 
@@ -72,18 +73,24 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
 
         {/* White light-string border button */}
         <div className="relative inline-block">
-          {/* Animated border */}
-          <div className="absolute inset-0 rounded-full p-[2px] pointer-events-none">
+          {/* Animated white gradient border */}
+          <div 
+            className="absolute inset-0 rounded-full overflow-hidden pointer-events-none"
+            style={{
+              padding: '2px',
+            }}
+          >
             <div
               className="absolute inset-0 rounded-full"
               style={{
-                background:
-                  'conic-gradient(from 0deg, transparent 0%, #ffffff 10%, #f0f0f0 20%, #ffffff 30%, transparent 40%)',
-                animation: shouldAnimate ? 'lightSpin 2s ease-in-out forwards' : 'none',
-                opacity: shouldAnimate ? 1 : 0,
+                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 70%, #ffffff 85%, #ffffff 95%, transparent 100%)`,
+                transition: 'background 0.016s linear',
               }}
             />
           </div>
+
+          {/* Inner mask to create border effect */}
+          <div className="absolute inset-[2px] rounded-full bg-black pointer-events-none" />
 
           {/* White button */}
           <button
