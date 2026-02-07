@@ -23,7 +23,7 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
             setHasAnimated(true);
             // Start animation
             let startTime: number | null = null;
-            const duration = 5600; // Half speed (2800 * 2)
+            const duration = 3294; // 170% speed (5600 / 1.7 ≈ 3294ms)
 
             const animate = (timestamp: number) => {
               if (!startTime) startTime = timestamp;
@@ -86,7 +86,7 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
 
         {/* White light-string border button */}
         <div className="relative inline-block">
-          {/* Animated white gradient border - OUTSIDE the button */}
+          {/* Shooting star effect - bright head with trailing tail */}
           <div 
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
@@ -94,12 +94,22 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
               transform: 'scale(1.12)',
             }}
           >
+            {/* Bright head of the shooting star */}
             <div
               className="absolute w-full h-full rounded-full"
               style={{
-                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 75%, rgba(255,255,255,0.6) 82%, #ffffff 87%, rgba(255,255,255,0.6) 92%, transparent 98%)`,
-                filter: 'blur(1px)',
+                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 82%, rgba(255,255,255,0.3) 86%, rgba(255,255,255,0.8) 89%, #ffffff 91%, #ffffff 92%, rgba(255,255,255,0.8) 93%, rgba(255,255,255,0.3) 95%, transparent 98%)`,
+                filter: 'blur(0.5px)',
                 opacity: lightOpacity,
+              }}
+            />
+            {/* Extra glow for the bright head */}
+            <div
+              className="absolute w-full h-full rounded-full"
+              style={{
+                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 88%, rgba(255,255,255,0.9) 91%, #ffffff 92%, rgba(255,255,255,0.9) 93%, transparent 96%)`,
+                filter: 'blur(0px)',
+                opacity: lightOpacity * 1.2,
               }}
             />
           </div>
