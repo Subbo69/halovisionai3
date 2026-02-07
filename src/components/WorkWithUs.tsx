@@ -73,24 +73,22 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
 
         {/* White light-string border button */}
         <div className="relative inline-block">
-          {/* Animated white gradient border */}
+          {/* Animated white gradient border - OUTSIDE the button */}
           <div 
-            className="absolute inset-0 rounded-full overflow-hidden pointer-events-none"
+            className="absolute inset-0 rounded-full pointer-events-none"
             style={{
-              padding: '2px',
+              padding: '3px',
+              transform: 'scale(1.15)', // Make it bigger than the button
             }}
           >
             <div
-              className="absolute inset-0 rounded-full"
+              className="absolute w-full h-full rounded-full"
               style={{
-                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 70%, #ffffff 85%, #ffffff 95%, transparent 100%)`,
-                transition: 'background 0.016s linear',
+                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 60%, rgba(255,255,255,0.3) 75%, #ffffff 85%, rgba(255,255,255,0.3) 95%, transparent 100%)`,
+                filter: 'blur(2px)',
               }}
             />
           </div>
-
-          {/* Inner mask to create border effect */}
-          <div className="absolute inset-[2px] rounded-full bg-black pointer-events-none" />
 
           {/* White button */}
           <button
