@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   TrendingUp,
   MessageSquare,
@@ -17,15 +17,6 @@ interface ServicesProps {
 export default function Services({ onAskAIClick, language }: ServicesProps) {
   const t = translations[language];
   const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const services = [
     {
@@ -69,21 +60,14 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
           src="https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg"
           alt=""
           style={{
-            width: '250%',
-            height: '250%',
+            width: '170%',
+            height: '170%',
             objectFit: 'cover',
             objectPosition: 'center',
             position: 'absolute',
             left: '50%',
             top: '50%',
-            transform: `translate(-50%, -50%) translateY(${scrollY * 0.5}px) scaleX(-1)`,
-          }}
-        />
-        {/* Dark overlay */}
-        <div 
-          className="absolute inset-0" 
-          style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            transform: 'translate(-50%, -50%) scaleX(-1)',
           }}
         />
       </div>
