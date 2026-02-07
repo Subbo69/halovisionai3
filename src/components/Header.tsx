@@ -16,7 +16,8 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
     <>
       <link href="https://fonts.cdnfonts.com/css/anurati" rel="stylesheet" />
 
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/70 border-b border-white/20">
+      {/* ✅ Fully transparent header */}
+      <header className="fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-5 flex items-center justify-between">
           
           {/* HALOVISION Branding */}
@@ -26,16 +27,18 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
             style={{ marginLeft: '-5px' }}
           >
             <span
-              className="text-transparent bg-clip-text bg-gradient-to-r from-black to-black 
-                         drop-shadow-[0_0_6px_rgba(255,255,255,0.45)] 
-                         font-bold select-none text-2xl sm:text-3xl md:text-4xl lg:text-5xl 
-                         scale-[0.95] sm:scale-100"
+              className="
+                text-transparent bg-clip-text
+                bg-gradient-to-r from-black to-black
+                drop-shadow-[0_0_6px_rgba(255,255,255,0.55)]
+                font-bold select-none
+                text-2xl sm:text-3xl md:text-4xl lg:text-5xl
+              "
               style={{
                 fontFamily: 'Anurati, sans-serif',
-                transform: 'scaleX(1)',
                 letterSpacing: '0.02em',
                 display: 'inline-block',
-                whiteSpace: 'nowrap', // ✅ Keeps "HALOVISION AI" in one line
+                whiteSpace: 'nowrap',
               }}
             >
               HALOVISION AI
@@ -96,7 +99,14 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
             {/* Booking Button */}
             <button
               onClick={onBookingClick}
-              className="bg-black text-white px-3 md:px-6 py-2 md:py-3 rounded-full flex items-center gap-2 hover:bg-gray-800 transition-colors text-xs md:text-base whitespace-nowrap"
+              className="
+                bg-black text-white
+                px-3 md:px-6 py-2 md:py-3
+                rounded-full flex items-center gap-2
+                hover:bg-gray-800 transition-colors
+                text-xs md:text-base whitespace-nowrap
+                shadow-lg
+              "
             >
               <span>{t.letsTalk}</span>
               <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
