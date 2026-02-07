@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Users, Zap, ChevronDown } from 'lucide-react';
 import { translations, Language } from '../utils/translations';
 
@@ -9,40 +9,25 @@ interface WhyUsProps {
 export default function WhyUs({ language }: WhyUsProps) {
   const t = translations[language];
   const [expandedReason, setExpandedReason] = useState<number | null>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
-
-  /* 🔁 PARALLAX EFFECT */
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!bgRef.current) return;
-      // multiplier 0.5 and slight offset
-      bgRef.current.style.transform = `translateY(${window.scrollY * 0.5 - 100}px)`;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <section className="relative py-20 overflow-hidden">
-      {/* Background Image with Parallax */}
+      {/* Background image */}
       <div
-        ref={bgRef}
-        className="absolute inset-0 w-full h-full bg-cover bg-center will-change-transform"
+        className="absolute inset-0 bg-cover bg-center bg-fixed"
         style={{
           backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
-          zIndex: -10,
         }}
-      />
+      ></div>
 
       {/* Overlay for readability */}
-      <div className="absolute inset-0 bg-white/20 z-0"></div>
+      <div className="absolute inset-0 bg-white/50"></div>
 
-      <div className="relative max-w-7xl mx-auto px-6 z-10">
+      <div className="relative max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left: Reasons */}
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white drop-shadow-lg">
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-black">
               {t.whyUsTitle}
             </h2>
 
@@ -55,7 +40,7 @@ export default function WhyUs({ language }: WhyUsProps) {
                     key={index}
                     className="
                       backdrop-blur-md
-                      bg-white/80
+                      bg-white
                       border border-white/60
                       rounded-2xl
                       p-4
