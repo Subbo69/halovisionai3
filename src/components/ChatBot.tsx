@@ -30,7 +30,6 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
   useEffect(scrollToBottom, [messages]);
 
   useEffect(() => {
@@ -72,12 +71,10 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
     setIsOpen(true);
     setTimeout(() => setAnimateOpen(true), 10);
   };
-
   const closeChat = () => {
     setAnimateOpen(false);
     setTimeout(() => setIsOpen(false), 300);
   };
-
   const toggleChat = () => {
     isOpen ? closeChat() : openChat();
   };
@@ -115,11 +112,9 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
       const data = await response.json();
       console.log('Webhook raw data:', data);
 
-      // Robust: Array, Objekt oder String
       let assistantMessage = '';
 
       if (Array.isArray(data) && data.length > 0) {
-        // n8n liefert oft [{json:{response: "..."}}, ...]
         assistantMessage =
           data[0]?.json?.response ||
           data[0]?.json?.message ||
@@ -197,11 +192,13 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
       <button
         ref={buttonRef}
         onClick={toggleChat}
-        style={{ padding: '1.0625rem' }}
-        className="fixed bottom-6 left-6 z-50 bg-black text-white rounded-full shadow-[0_0_20px_rgba(255,255,255,0.8)] hover:shadow-[0_0_30px_rgba(255,255,255,1)] transition-all hover:scale-110"
+        className="fixed bottom-6 left-6 z-50 flex items-center gap-2 bg-black text-white rounded-full shadow-[0_0_20px_rgba(255,255,255,0.8)] hover:shadow-[0_0_30px_rgba(255,255,255,1)] transition-all hover:scale-110 px-4 py-3"
         aria-label="Open chat"
       >
         <MessageSquare className="w-7 h-7" />
+        <span className="whitespace-nowrap font-semibold text-sm drop-shadow-sm">
+          Ask Halo
+        </span>
       </button>
 
       {/* CHAT WINDOW */}
@@ -210,8 +207,8 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
           ref={chatRef}
           className={`fixed bottom-24 left-6 z-50 w-11/12 max-w-[24rem]
           h-[400px] md:h-[600px]
-          flex flex-col backdrop-blur-xl bg-white/60 border border-white/50
-          rounded-3xl shadow-[0_0_25px_rgba(255,255,255,0.4)] overflow-hidden
+          flex flex-col backdrop-blur-xl bg-black/80 border border-white/30
+          rounded-3xl shadow-[0_0_25px_rgba(0,0,0,0.6)] overflow-hidden
           transform transition-all duration-300 ease-out
           ${animateOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
         `}
@@ -249,7 +246,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
                   className={`max-w-[80%] p-3 rounded-2xl ${
                     message.role === 'user'
                       ? 'bg-black text-white'
-                      : 'bg-white/60 text-gray-800 border border-white/50'
+                      : 'bg-gray-800/70 text-white border border-white/20'
                   }`}
                 >
                   {message.content}
@@ -259,14 +256,14 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
 
             {recommendations.length > 0 && !isLoading && (
               <div className="flex flex-col gap-2">
-                <div className="text-xs text-gray-500 text-center">{t.suggestions}</div>
+                <div className="text-xs text-gray-300 text-center">{t.suggestions}</div>
                 {recommendations
                   .slice(0, window.innerWidth < 768 ? 1 : 3)
                   .map((rec, index) => (
                     <button
                       key={index}
                       onClick={() => handleSend(rec)}
-                      className="bg-white/60 text-gray-800 border border-white/50 p-3 rounded-2xl hover:bg-white/80 text-left text-sm"
+                      className="bg-gray-800/70 text-white border border-white/20 p-3 rounded-2xl hover:bg-gray-800/90 text-left text-sm"
                     >
                       {rec}
                     </button>
@@ -276,7 +273,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
 
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-white/60 text-gray-800 border border-white/50 p-3 rounded-2xl">
+                <div className="bg-gray-800/70 text-white border border-white/20 p-3 rounded-2xl">
                   <Loader2 className="w-5 h-5 animate-spin" />
                 </div>
               </div>
@@ -286,7 +283,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
           </div>
 
           {/* INPUT */}
-          <div className="p-4 bg-white/50 border-t border-white/50 flex items-end gap-2 rounded-b-3xl">
+          <div className="p-4 bg-gray-900/70 border-t border-white/20 flex items-end gap-2 rounded-b-3xl">
             <textarea
               ref={inputRef}
               value={input}
@@ -295,7 +292,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
               rows={1}
               style={{ lineHeight: '1.25rem' }}
               placeholder={placeholderText}
-              className="flex-1 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/70 resize-none overflow-y-auto max-h-10"
+              className="flex-1 px-4 py-2 rounded-full border border-gray-700 focus:outline-none focus:ring-2 focus:ring-white bg-gray-800/60 resize-none overflow-y-auto max-h-10 text-white"
             />
             <button
               onClick={() => handleSend()}
