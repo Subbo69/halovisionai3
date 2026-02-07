@@ -118,11 +118,11 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
           }}
         />
         
-        {/* Black gradient overlay - darker towards bottom */}
+        {/* Smooth Black gradient overlay - more color stops to prevent banding */}
         <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,1) 100%)',
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.4) 15%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.8) 75%, rgba(0,0,0,0.9) 85%, rgba(0,0,0,1) 100%)',
           }}
         />
       </div>
