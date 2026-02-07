@@ -43,7 +43,6 @@ export default function Testimonials() {
 
   return (
     <section className="relative py-12 md:py-16">
-      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black backdrop-blur-sm pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto px-6 text-center">
@@ -52,10 +51,10 @@ export default function Testimonials() {
         </h3>
 
         <div className="relative flex items-center justify-center">
-          {/* Left fade — more aggressive and wider */}
-          <div className="absolute left-0 top-0 h-full w-24 pointer-events-none bg-gradient-to-r from-black/80 to-transparent z-20" />
-          {/* Right fade — more aggressive and wider */}
-          <div className="absolute right-0 top-0 h-full w-24 pointer-events-none bg-gradient-to-l from-black/80 to-transparent z-20" />
+          {/* Left fade — only on desktop */}
+          <div className="hidden md:block absolute left-0 top-0 h-full w-24 pointer-events-none bg-gradient-to-r from-black/80 to-transparent z-20" />
+          {/* Right fade — only on desktop */}
+          <div className="hidden md:block absolute right-0 top-0 h-full w-24 pointer-events-none bg-gradient-to-l from-black/80 to-transparent z-20" />
 
           {/* Scroll Left */}
           <button
@@ -91,7 +90,7 @@ export default function Testimonials() {
                     <h4 className="text-white font-bold text-lg">{review.name}</h4>
                     <p className="text-gray-300 text-sm">{review.role}</p>
                   </div>
-                  <a
+                  
                     href={review.linkedIn}
                     target="_blank"
                     rel="noopener noreferrer"
