@@ -25,8 +25,17 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-36 md:pt-40 pb-16 overflow-hidden">
-      {/* Background Image ONLY */}
-      <div ref={bgRef} className="hero-bg absolute inset-0 will-change-transform" />
+      {/* Shared Background */}
+      <div
+        ref={bgRef}
+        className="absolute inset-0 w-full h-full will-change-transform z-[-1]"
+        style={{
+          backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-6 w-full text-center flex flex-col items-center">
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight text-white mt-10 drop-shadow-lg">
@@ -58,7 +67,7 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
         <div className="flex justify-center mb-6 w-full">
           <button
             onClick={onBookingClick}
-            className="bg-black text-white px-8 py-4 rounded-full text-lg flex items-center gap-3 shadow-lg hover:bg-gray-800 transition-transform hover:scale-[1.06]"
+            className="bg-black/70 text-white px-8 py-4 rounded-full text-lg flex items-center gap-3 shadow-lg hover:bg-black/80 transition-transform hover:scale-[1.06]"
           >
             <span>{t.startJourney}</span>
             <ArrowRight className="w-5 h-5" />
@@ -73,23 +82,6 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
           <span>{t.askAI}</span>
         </button>
       </div>
-
-      <style>{`
-        .hero-bg {
-          background-image: url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg');
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-position: center;
-          width: 100%;
-          height: 110%;
-        }
-
-        @media (max-width: 768px) {
-          .hero-bg {
-            background-position: center 35%;
-          }
-        }
-      `}</style>
     </section>
   );
 }
