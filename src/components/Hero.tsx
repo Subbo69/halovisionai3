@@ -23,16 +23,13 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
           <div
             className="cursor-pointer hover:opacity-80 transition-opacity"
             onClick={onBookingClick}
+            style={{ marginLeft: '-8px' }} // ✅ Pulls logo more to the left
           >
             <span
-              className="
-                text-white font-bold
-                select-none
-                text-xl sm:text-2xl md:text-3xl lg:text-4xl
-                tracking-[0.15em]
-              "
+              className="text-white font-bold select-none text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
               style={{
                 fontFamily: 'Anurati, sans-serif',
+                letterSpacing: '0.02em',
                 textShadow: '0 2px 12px rgba(0,0,0,0.55)',
               }}
             >
@@ -41,7 +38,7 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
           </div>
 
           {/* RIGHT SIDE */}
-          <div className="flex items-center gap-4 md:gap-6">
+          <div className="flex items-center gap-3 md:gap-4">
             
             {/* LANGUAGE SELECTOR */}
             <div className="relative">
@@ -85,7 +82,7 @@ export default function Header({ onBookingClick, language, onLanguageChange }: H
               onClick={onBookingClick}
               className="
                 relative text-white
-                px-4 md:px-6 py-2 md:py-3
+                px-3 md:px-6 py-2 md:py-3
                 rounded-full
                 flex items-center gap-2
                 text-xs md:text-base
