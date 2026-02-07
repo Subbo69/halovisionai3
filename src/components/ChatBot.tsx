@@ -192,7 +192,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
       <button
         ref={buttonRef}
         onClick={toggleChat}
-        className="fixed bottom-6 left-6 z-50 flex items-center gap-2 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)] hover:shadow-[0_0_30px_rgba(255,255,255,1)] transition-all hover:scale-110 px-4 py-3"
+        className="fixed bottom-6 left-6 z-50 flex items-center gap-2 rounded-full shadow-[0_0_5px_rgba(255,255,255,0.8)] hover:shadow-[0_0_30px_rgba(255,255,255,1)] transition-all hover:scale-110 px-4 py-3"
         style={{
           background: 'linear-gradient(135deg, rgba(168,85,247,0.85), rgba(249,115,22,0.85))',
           backdropFilter: 'blur(10px)',
