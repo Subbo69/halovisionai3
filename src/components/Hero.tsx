@@ -24,24 +24,24 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-36 md:pt-40 pb-16 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col items-center justify-center pt-36 md:pt-40 pb-16 overflow-hidden bg-white">
       {/* Background Image */}
       <div ref={bgRef} className="hero-bg absolute inset-0 will-change-transform" />
 
-      {/* VERY LIGHT overlay — optional, remove if you want zero dimming */}
+      {/* ✅ Bottom fade ONLY */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute bottom-0 left-0 w-full h-[35%] pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, rgba(255,255,255,0.08), rgba(255,255,255,0))',
+          background: 'linear-gradient(to bottom, rgba(255,255,255,0), #ffffff)',
         }}
       />
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-6 w-full text-center flex flex-col items-center">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight text-black mt-10">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight text-white mt-10 drop-shadow-lg">
           {t.heroTitle}
         </h1>
 
-        <p className="text-xl md:text-2xl text-gray-800 max-w-3xl mb-14">
+        <p className="text-xl md:text-2xl text-white/90 max-w-3xl mb-14 drop-shadow-md">
           {t.heroSubtitle}
         </p>
 
@@ -74,7 +74,7 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
 
         <button
           onClick={onAskAIClick}
-          className="text-black flex items-center gap-2 hover:text-gray-600 transition-colors text-[130%]"
+          className="text-white flex items-center gap-2 hover:text-white/70 transition-colors text-[130%] drop-shadow"
         >
           <Sparkles className="w-4 h-4" />
           <span>{t.askAI}</span>
