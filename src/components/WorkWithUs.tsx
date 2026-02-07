@@ -11,7 +11,8 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
   const t = translations[language];
   const sectionRef = useRef<HTMLDivElement>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [animationProgress, setAnimationProgress] = useState(-90); // Start from top
+  const [animationProgress, setAnimationProgress] = useState(-90);
+  const [lightOpacity, setLightOpacity] = useState(0);
 
   // Intersection Observer to trigger animation on scroll
   useEffect(() => {
@@ -22,28 +23,34 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
             setHasAnimated(true);
             // Start animation
             let startTime: number | null = null;
-            const duration = 2800; // 40% slower (2000 * 1.4 = 2800ms)
+            const duration = 5600; // Half speed (2800 * 2)
 
             const animate = (timestamp: number) => {
               if (!startTime) startTime = timestamp;
               const elapsed = timestamp - startTime;
               const progress = Math.min(elapsed / duration, 1);
               
-              // Smoother ease in-out cubic for better acceleration/deceleration
+              // Smoother ease in-out for better acceleration/deceleration
               const eased = progress < 0.5 
                 ? 4 * progress * progress * progress 
                 : 1 - Math.pow(-2 * progress + 2, 3) / 2;
               
-              // Start from -90deg (top) and go to 270deg (full rotation back to top)
+              // Opacity control: fade in at start, fade out at end (going into button)
+              if (progress < 0.05) {
+                // Fade in during first 5%
+                setLightOpacity(progress / 0.05);
+              } else if (progress > 0.92) {
+                // Fade out during last 8% (smooth disappear into button)
+                setLightOpacity((1 - progress) / 0.08);
+              } else {
+                setLightOpacity(1);
+              }
+              
+              // Start from -90deg (top) and complete one full rotation
               setAnimationProgress(-90 + (eased * 360));
 
               if (progress < 1) {
                 requestAnimationFrame(animate);
-              } else {
-                // After animation completes, hide the light
-                setTimeout(() => {
-                  setAnimationProgress(-90);
-                }, 100);
               }
             };
 
@@ -83,17 +90,16 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
           <div 
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
-              padding: '3px',
-              transform: 'scale(1.15)',
+              padding: '2px',
+              transform: 'scale(1.12)',
             }}
           >
             <div
               className="absolute w-full h-full rounded-full"
               style={{
-                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 65%, rgba(255,255,255,0.4) 78%, #ffffff 85%, rgba(255,255,255,0.4) 92%, transparent 100%)`,
-                filter: 'blur(3px)',
-                opacity: hasAnimated && animationProgress > -90 ? 1 : 0,
-                transition: 'opacity 0.2s ease-out',
+                background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 75%, rgba(255,255,255,0.6) 82%, #ffffff 87%, rgba(255,255,255,0.6) 92%, transparent 98%)`,
+                filter: 'blur(1px)',
+                opacity: lightOpacity,
               }}
             />
           </div>
