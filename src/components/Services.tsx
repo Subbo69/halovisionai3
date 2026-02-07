@@ -54,22 +54,8 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
 
   return (
     <section className="relative py-20 text-white overflow-hidden">
-      {/* Background with Purple → Orange/Red + Black vertical gradient */}
-      <div
-        className="absolute inset-0 w-full h-full"
-        style={{
-          backgroundImage: `
-            /* Horizontal black gradient (top -> bottom) */
-            linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%),
-            /* Diagonal purple → orange/red gradient */
-            linear-gradient(135deg, rgba(128,0,128,0.8) 60%, rgba(255,69,0,0.7) 40%)
-          `,
-          backgroundBlendMode: 'overlay',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center top',
-          zIndex: -1,
-        }}
-      />
+      {/* No background here, fully transparent */}
+      <div className="absolute inset-0 w-full h-full" style={{ background: 'transparent', zIndex: -1 }} />
 
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
@@ -91,7 +77,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
                 key={index}
                 onClick={() => toggleCard(index)}
                 className="
-                  bg-white/5        /* Slight transparency, no white halo */
+                  bg-white/5        /* Slight transparency for card itself */
                   rounded-2xl
                   p-6
                   hover:bg-white/10 /* Slight hover effect */
