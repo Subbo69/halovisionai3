@@ -119,11 +119,11 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
           }}
         />
         
-        {/* Lighter Black gradient overlay - 20% less dark */}
+        {/* Shorter fade - reaches 100% black faster */}
         <div
           className="absolute inset-0 w-full h-full"
           style={{
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.28) 10%, rgba(0,0,0,0.32) 20%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.48) 45%, rgba(0,0,0,0.56) 60%, rgba(0,0,0,0.64) 75%, rgba(0,0,0,0.72) 85%, rgba(0,0,0,0.76) 92%, rgba(0,0,0,0.8) 100%)',
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.32) 8%, rgba(0,0,0,0.4) 15%, rgba(0,0,0,0.5) 25%, rgba(0,0,0,0.65) 40%, rgba(0,0,0,0.8) 55%, rgba(0,0,0,0.92) 70%, rgba(0,0,0,1) 85%, rgba(0,0,0,1) 100%)',
           }}
         />
       </div>
