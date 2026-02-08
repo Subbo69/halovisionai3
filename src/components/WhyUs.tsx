@@ -19,7 +19,7 @@ export default function WhyUs({ language }: WhyUsProps) {
         style={{
           backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
         }}
-      ></div>
+      />
 
       <div className="relative max-w-7xl mx-auto px-6 z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -29,59 +29,59 @@ export default function WhyUs({ language }: WhyUsProps) {
               {t.whyUsTitle}
             </h2>
 
-            <div className="space-y-4">
-              {t.reasons.slice(0, 4).map((reason, index) => {
+            <div className="space-y-3">
+              {t.reasons.slice(0, 5).map((reason, index) => {
                 const isExpanded = expandedReason === index;
 
                 return (
                   <div
                     key={index}
-                    className="
-                      backdrop-blur-md
-                      bg-gray-200/20
-                      border border-white/30
-                      rounded-2xl
-                      p-4
-                      shadow-xl shadow-black/30
-                      hover:shadow-2xl hover:shadow-black/40
-                      transition-all
-                      cursor-pointer
-                    "
                     onClick={() =>
                       setExpandedReason(isExpanded ? null : index)
                     }
+                    className="
+                      backdrop-blur-md
+                      bg-gray-200/15
+                      rounded-xl
+                      px-4 py-3
+                      shadow-lg shadow-black/25
+                      hover:bg-gray-200/20
+                      transition-all
+                      cursor-pointer
+                    "
                   >
-                    <div className="flex items-start gap-4">
-                      <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center flex-shrink-0 font-bold">
-                        {index + 1}
-                      </div>
-
-                      <div className="flex-1">
-                        <p className="text-lg text-white font-bold drop-shadow">
-                          {reason}
-                        </p>
-
-                        <div
-                          className={`overflow-hidden transition-all duration-300 ${
-                            isExpanded ? 'max-h-96 mt-3' : 'max-h-0'
-                          }`}
-                        >
-                          <p className="text-white/90 leading-relaxed drop-shadow">
-                            {t.reasonsDesc[index]}
-                          </p>
+                    {/* HEADER ROW */}
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-7 h-7 rounded-full bg-black text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
+                          {index + 1}
                         </div>
 
-                        <button
-                          className="flex items-center gap-2 text-sm text-white/80 hover:text-white drop-shadow transition-colors mt-2"
-                        >
-                          <span>{isExpanded ? t.close : 'Open'}</span>
-                          <ChevronDown
-                            className={`w-4 h-4 transition-transform duration-300 ${
-                              isExpanded ? 'rotate-180' : ''
-                            }`}
-                          />
-                        </button>
+                        <p className="text-base md:text-lg text-white font-semibold drop-shadow">
+                          {reason}
+                        </p>
                       </div>
+
+                      {/* Right-side toggle */}
+                      <div className="flex items-center gap-1 text-xs md:text-sm text-white/70 flex-shrink-0">
+                        <span>{isExpanded ? t.close : 'Open'}</span>
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform duration-300 ${
+                            isExpanded ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </div>
+                    </div>
+
+                    {/* EXPANDABLE CONTENT */}
+                    <div
+                      className={`overflow-hidden transition-all duration-300 ${
+                        isExpanded ? 'max-h-48 mt-3' : 'max-h-0'
+                      }`}
+                    >
+                      <p className="text-white/90 text-sm md:text-base leading-relaxed drop-shadow">
+                        {t.reasonsDesc[index]}
+                      </p>
                     </div>
                   </div>
                 );
@@ -90,7 +90,7 @@ export default function WhyUs({ language }: WhyUsProps) {
           </div>
 
           {/* Right: Founder info */}
-          <div className="backdrop-blur-md bg-gray-200/20 border border-white/30 rounded-3xl p-8 shadow-xl shadow-black/30">
+          <div className="backdrop-blur-md bg-gray-200/20 rounded-3xl p-8 shadow-xl shadow-black/30">
             <div className="mb-6">
               <div className="flex items-center gap-6 mb-6">
                 <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg hover:scale-105 transition-transform duration-300">
@@ -112,15 +112,16 @@ export default function WhyUs({ language }: WhyUsProps) {
                 </div>
               </div>
 
-              {/* Collapsible content with fade preview on mobile */}
+              {/* Collapsible content */}
               <div className="relative">
                 <div
                   className={`overflow-hidden transition-all duration-300 ${
                     isFounderExpanded ? 'max-h-96' : 'max-h-16'
                   } lg:max-h-none`}
                 >
-                  <p className="text-white/90 mb-6 drop-shadow">{t.customBuiltDesc}</p>
-                  <p className="text-white/90 mb-6 drop-shadow">{t.dashboardDesc}</p>
+                  <p className="text-white/90 mb-4 drop-shadow">
+                    {t.customBuiltDesc}
+                  </p>
 
                   <div className="flex items-center gap-2 text-white/80 drop-shadow">
                     <Zap className="w-5 h-5" />
@@ -128,13 +129,11 @@ export default function WhyUs({ language }: WhyUsProps) {
                   </div>
                 </div>
 
-                {/* Gradient fade overlay - only visible on mobile when collapsed */}
                 {!isFounderExpanded && (
                   <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-gray-200/20 to-transparent pointer-events-none lg:hidden" />
                 )}
               </div>
 
-              {/* Open/Close button - only visible on mobile */}
               <button
                 className="flex items-center gap-2 text-sm text-white/80 hover:text-white drop-shadow transition-colors mt-2 lg:hidden"
                 onClick={() => setIsFounderExpanded(!isFounderExpanded)}
