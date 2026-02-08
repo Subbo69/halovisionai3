@@ -1,6 +1,3 @@
-
-
-Let me know what you need help with!import { ArrowRight, Sparkles } from 'lucide-react';
 import { translations, Language } from '../utils/translations';
 import { useEffect, useRef } from 'react';
 interface HeroProps {
