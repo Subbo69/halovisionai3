@@ -72,7 +72,7 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
       // Second animation: after 30 seconds (3s initial + 30s = 33s total)
       const secondTimer = setTimeout(() => {
         runAnimation();
-      }, 25000);
+      }, 27000);
       timersRef.current.push(secondTimer);
 
       // Third animation and beyond: every 3 minutes after the second one
@@ -84,7 +84,7 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
           // Continue every 3 minutes
           const recurringInterval = setInterval(() => {
             runAnimation();
-          }, 180000); // 3 minutes
+          }, 70000); // 3 minutes
 
           // Store interval ID for cleanup (cast to NodeJS.Timeout)
           timersRef.current.push(recurringInterval as unknown as NodeJS.Timeout);
