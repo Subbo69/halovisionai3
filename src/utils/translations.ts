@@ -24,9 +24,9 @@ export const translations = {
     marketingAutomation: "Marketing Automation",
     marketingAutomationDesc:
       "Automate campaigns, segment audiences, and run intelligent promotions to increase reach and conversions.",
-    saveTime: "Save Time",
+    saveTime: "Skyrocket Productivity",
     saveTimeDesc:
-      "Automate repetitive tasks, streamline workflows, and free up your team to focus on strategic priorities.",
+      "Time is money. Eliminate repetitive tasks and reclaim hundreds of hours annually. Let AI handle the busywork while your team focuses on high-value activities that drive revenue and scale your business faster.",
     whyUsTitle: "Why Us",
     reasons: [
       "New-gen approach",
@@ -142,9 +142,9 @@ export const translations = {
     marketingAutomation: "Marketing-Automatisierung",
     marketingAutomationDesc:
       "Automatisiere Kampagnen, segmentiere Zielgruppen und führe intelligente Aktionen durch, um Reichweite und Conversions zu steigern.",
-    saveTime: "Zeit sparen",
+    saveTime: "Produktivität steigern",
     saveTimeDesc:
-      "Automatisiere wiederkehrende Aufgaben, optimiere Arbeitsabläufe und verschaffe deinem Team Zeit für strategische Prioritäten.",
+      "Zeit ist Geld. Eliminiere wiederkehrende Aufgaben und gewinne hunderte Stunden jährlich zurück. Lass KI die Routinearbeit erledigen, während dein Team sich auf wertschöpfende Aktivitäten konzentriert, die Umsatz generieren und dein Unternehmen schneller skalieren.",
     whyUsTitle: "Warum Wir",
     reasons: [
       "Neue-Gen-Ansatz",
@@ -234,9 +234,9 @@ export const translations = {
     marketingAutomation: "Automatisation du marketing",
     marketingAutomationDesc:
       "Automatisez les campagnes et optimisez les conversions.",
-    saveTime: "Gagner du temps",
+    saveTime: "Augmenter la productivité",
     saveTimeDesc:
-      "Automatisez les tâches répétitives et concentrez-vous sur l'essentiel.",
+      "Le temps, c'est de l'argent. Éliminez les tâches répétitives et récupérez des centaines d'heures par an. Laissez l'IA gérer le travail routinier pendant que votre équipe se concentre sur les activités à forte valeur ajoutée qui génèrent des revenus et accélèrent la croissance.",
     whyUsTitle: "Pourquoi nous",
     testimonialsTitle: "Témoignages",
     clientReviewsTitle: "Avis clients",
