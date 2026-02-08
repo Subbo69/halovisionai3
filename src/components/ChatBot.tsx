@@ -20,9 +20,9 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
   const [longMessagesSent, setLongMessagesSent] = useState(0);
   const [limitWarning, setLimitWarning] = useState<string | null>(null);
 
-  // Animation states - simple fade
+  // Animation states - wave sweep
   const [isVisible, setIsVisible] = useState(true);
-  const [buttonBrightness, setButtonBrightness] = useState(0); // 0 = normal, 1 = fully bright white
+  const [wavePosition, setWavePosition] = useState(-1); // -1 = not animating, 0-1 = position across button
   const timersRef = useRef<NodeJS.Timeout[]>([]);
 
   const chatRef = useRef<HTMLDivElement>(null);
@@ -70,32 +70,28 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
 
-  // Simple fade animation
-  const runFadeAnimation = () => {
+  // Wave sweep animation
+  const runWaveAnimation = () => {
     let startTime: number | null = null;
-    const duration = 2000; // 2 seconds total (1s fade in, 1s fade out)
+    const duration = 2500; // 2.5 seconds for smooth movement
 
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Create a fade in and fade out effect
-      let brightness;
-      if (progress < 0.5) {
-        // First half: fade in (0 to 1)
-        brightness = progress * 2; // 0 -> 1
-      } else {
-        // Second half: fade out (1 to 0)
-        brightness = (1 - progress) * 2; // 1 -> 0
-      }
+      // Ease in-out for smooth acceleration and deceleration
+      const eased = progress < 0.5 
+        ? 2 * progress * progress 
+        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
       
-      setButtonBrightness(brightness);
+      // Move from -0.3 to 1.3 (starts off-screen left, ends off-screen right)
+      setWavePosition(-0.3 + (eased * 1.6));
 
       if (progress < 1) {
         requestAnimationFrame(animate);
       } else {
-        setButtonBrightness(0); // Ensure we end at 0
+        setWavePosition(-1); // Reset to hidden
       }
     };
 
@@ -110,23 +106,23 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
     if (isVisible && !isOpen) {
       // First animation: 2.3s
       const firstTimer = setTimeout(() => {
-        runFadeAnimation();
+        runWaveAnimation();
       }, 2300);
       timersRef.current.push(firstTimer);
 
       // Second animation: 27s
       const secondTimer = setTimeout(() => {
-        runFadeAnimation();
+        runWaveAnimation();
       }, 27000);
       timersRef.current.push(secondTimer);
 
       // Recurring every 70s after third
       const scheduleRecurring = () => {
         const thirdTimer = setTimeout(() => {
-          runFadeAnimation();
+          runWaveAnimation();
           
           const recurringInterval = setInterval(() => {
-            runFadeAnimation();
+            runWaveAnimation();
           }, 70000);
 
           timersRef.current.push(recurringInterval as unknown as NodeJS.Timeout);
@@ -260,12 +256,38 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
       ? 'Posez votre question'
       : 'Any questions?');
 
+  // Create gradient for wave effect
+  const createWaveGradient = () => {
+    if (wavePosition < 0) {
+      return 'transparent';
+    }
+    
+    const pos = wavePosition * 100; // Convert to percentage
+    const waveWidth = 30; // Width of the wave in percentage
+    
+    // Create a gradient that's wider in the middle (thicker wave)
+    return `linear-gradient(to right, 
+      transparent 0%, 
+      transparent ${Math.max(0, pos - waveWidth)}%, 
+      rgba(255, 255, 255, 0.1) ${Math.max(0, pos - waveWidth * 0.8)}%,
+      rgba(255, 255, 255, 0.5) ${Math.max(0, pos - waveWidth * 0.5)}%,
+      rgba(255, 255, 255, 0.9) ${pos}%,
+      rgba(255, 255, 255, 0.5) ${Math.min(100, pos + waveWidth * 0.5)}%,
+      rgba(255, 255, 255, 0.1) ${Math.min(100, pos + waveWidth * 0.8)}%,
+      transparent ${Math.min(100, pos + waveWidth)}%,
+      transparent 100%
+    )`;
+  };
+
+  // Determine if text should be black based on wave position
+  const shouldTextBeBlack = wavePosition >= 0.2 && wavePosition <= 0.8;
+
   /* ---------- RENDER ---------- */
   return (
     <>
       <link href="https://fonts.cdnfonts.com/css/anurati" rel="stylesheet" />
 
-      {/* OPEN BUTTON with FADE ANIMATION */}
+      {/* OPEN BUTTON with WAVE ANIMATION */}
       <button
         ref={buttonRef}
         onClick={toggleChat}
@@ -273,9 +295,9 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
                    px-4 py-3 border border-white
                    backdrop-blur-sm transition-all hover:scale-110 font-semibold"
         style={{
-          backgroundColor: `rgba(255, 255, 255, ${buttonBrightness * 0.9})`,
-          color: buttonBrightness > 0.5 ? '#000000' : '#ffffff',
-          transition: 'background-color 0.3s ease, color 0.3s ease',
+          background: wavePosition >= 0 ? createWaveGradient() : 'transparent',
+          color: shouldTextBeBlack ? '#000000' : '#ffffff',
+          transition: 'color 0.2s ease',
         }}
         aria-label={t.askHaloAI}
       >
