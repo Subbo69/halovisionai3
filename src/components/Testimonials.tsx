@@ -1,8 +1,86 @@
-import { useRef } from 'react';
-import { ChevronLeft, ChevronRight, Linkedin } from 'lucide-react';
+import { useRef, useEffect, useState } from 'react';
+import { ChevronLeft, ChevronRight, Linkedin, Mail, MessageSquare, Star } from 'lucide-react';
 
 export default function Testimonials() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const animationRef = useRef<number>();
+
+  const reviews = [
+    {
+      name: "Sarah Johnson",
+      role: "CEO, TechStart Inc",
+      link: "https://linkedin.com",
+      icon: "linkedin",
+      review: "HaloVision transformed our customer service with their AI agents. Response times dropped by 80% and customer satisfaction is at an all-time high!",
+    },
+    {
+      name: "Michael Chen",
+      role: "Founder, GrowthLab",
+      link: "mailto:example@email.com",
+      icon: "mail",
+      review: "The automation solutions they built for us freed up our team to focus on strategic work. ROI was evident within the first month.",
+    },
+    {
+      name: "Emma Rodriguez",
+      role: "Director, SalesForce Pro",
+      link: "https://linkedin.com",
+      icon: "linkedin",
+      review: "Their lead generation AI is incredible. We're now capturing and qualifying leads 24/7 without any manual effort.",
+    },
+    {
+      name: "David Park",
+      role: "Manager, CloudSync",
+      link: "https://linkedin.com",
+      icon: "linkedin",
+      review: "Working with HaloVision was seamless. They understood our needs and delivered a custom solution that exceeded expectations.",
+    },
+    {
+      name: "Lisa Anderson",
+      role: "COO, FinTech Solutions",
+      link: "mailto:example@email.com",
+      icon: "mail",
+      review: "The AI agents handle our appointment scheduling flawlessly. No more back-and-forth emails or missed bookings.",
+    },
+    {
+      name: "James Wilson",
+      role: "Founder, MarketEdge",
+      link: "https://linkedin.com",
+      icon: "linkedin",
+      review: "Their marketing automation saved us countless hours. Campaigns run smoothly and conversions have increased by 45%.",
+    },
+    {
+      name: "Sophia Martinez",
+      role: "CEO, HealthPlus",
+      link: "https://linkedin.com",
+      icon: "linkedin",
+      review: "Patient follow-ups are now automated and personalized. Our retention rate improved significantly since implementing their solution.",
+    },
+    {
+      name: "Robert Kim",
+      role: "Director, RetailPro",
+      link: "mailto:example@email.com",
+      icon: "mail",
+      review: "The review management system they built helps us respond to all customer feedback promptly. Our online reputation has never been better.",
+    },
+    {
+      name: "Amanda Thompson",
+      role: "Manager, Creative Studio",
+      link: "https://linkedin.com",
+      icon: "linkedin",
+      review: "HaloVision's content creation AI assists our team beautifully. We're producing twice as much quality content in half the time.",
+    },
+    {
+      name: "Chris Patel",
+      role: "Founder, DataDrive",
+      link: "https://linkedin.com",
+      icon: "linkedin",
+      review: "Their data analysis agents provide insights we never knew we needed. Decision-making is now backed by real-time intelligence.",
+    },
+  ];
+
+  // Duplicate reviews for infinite loop effect
+  const infiniteReviews = [...reviews, ...reviews, ...reviews];
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -14,32 +92,46 @@ export default function Testimonials() {
     }
   };
 
-  const reviews = [
-    {
-      name: "Client Name",
-      role: "CEO, Company Name",
-      linkedIn: "#",
-      review: "Review text goes here",
-    },
-    {
-      name: "Client Name",
-      role: "Founder, Company Name",
-      linkedIn: "#",
-      review: "Review text goes here",
-    },
-    {
-      name: "Client Name",
-      role: "Director, Company Name",
-      linkedIn: "#",
-      review: "Review text goes here",
-    },
-    {
-      name: "Client Name",
-      role: "Manager, Company Name",
-      linkedIn: "#",
-      review: "Review text goes here",
-    },
-  ];
+  // Auto-scroll effect
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const autoScroll = () => {
+      if (!isPaused && container) {
+        // Scroll by 1 pixel for smooth continuous movement
+        container.scrollLeft += 1;
+
+        // Reset scroll position for infinite loop
+        const maxScroll = container.scrollWidth / 3; // Since we tripled the reviews
+        if (container.scrollLeft >= maxScroll) {
+          container.scrollLeft = 0;
+        }
+      }
+      animationRef.current = requestAnimationFrame(autoScroll);
+    };
+
+    animationRef.current = requestAnimationFrame(autoScroll);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isPaused]);
+
+  const getIcon = (iconType: string) => {
+    switch (iconType) {
+      case 'linkedin':
+        return <Linkedin className="w-5 h-5" />;
+      case 'mail':
+        return <Mail className="w-5 h-5" />;
+      case 'message':
+        return <MessageSquare className="w-5 h-5" />;
+      default:
+        return <Star className="w-5 h-5" />;
+    }
+  };
 
   return (
     <section className="relative py-12 md:py-16">
@@ -52,9 +144,9 @@ export default function Testimonials() {
         </h3>
 
         <div className="relative flex items-center justify-center">
-          {/* Left fade — more aggressive and wider */}
+          {/* Left fade */}
           <div className="absolute left-0 top-0 h-full w-24 pointer-events-none bg-gradient-to-r from-black/80 to-transparent z-20" />
-          {/* Right fade — more aggressive and wider */}
+          {/* Right fade */}
           <div className="absolute right-0 top-0 h-full w-24 pointer-events-none bg-gradient-to-l from-black/80 to-transparent z-20" />
 
           {/* Scroll Left */}
@@ -78,27 +170,33 @@ export default function Testimonials() {
           {/* Reviews */}
           <div
             ref={scrollContainerRef}
-            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth py-4 px-12 justify-center relative z-10"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            className="flex gap-6 overflow-x-auto scrollbar-hide py-4 px-12 justify-start relative z-10"
+            style={{ 
+              scrollbarWidth: 'none', 
+              msOverflowStyle: 'none',
+              cursor: 'grab'
+            }}
           >
-            {reviews.map((review, index) => (
-              <div
+            {infiniteReviews.map((review, index) => (
+              
                 key={index}
-                className="flex-shrink-0 w-[300px] md:w-[350px] backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all text-left"
+                href={review.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 w-[300px] md:w-[350px] backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all text-left cursor-pointer"
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
               >
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h4 className="text-white font-bold text-lg">{review.name}</h4>
                     <p className="text-gray-300 text-sm">{review.role}</p>
                   </div>
-                  <a
-                    href={review.linkedIn}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-400 hover:text-blue-300"
-                  >
-                    <Linkedin className="w-5 h-5" />
-                  </a>
+                  <div className="text-blue-400 hover:text-blue-300 flex-shrink-0">
+                    {getIcon(review.icon)}
+                  </div>
                 </div>
 
                 <p className="text-gray-200 text-sm leading-relaxed">
@@ -117,7 +215,7 @@ export default function Testimonials() {
                     </svg>
                   ))}
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
