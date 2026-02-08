@@ -13,9 +13,7 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
 
   const [isOpen, setIsOpen] = useState(false);
   const [animateOpen, setAnimateOpen] = useState(false);
-  const [messages, setMessages] = useState
-    Array<{ role: 'user' | 'assistant'; content: string }>
-  >([{ role: 'assistant', content: t.chatGreeting }]);
+  const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string }>>([{ role: 'assistant', content: t.chatGreeting }]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [recommendations, setRecommendations] = useState<string[]>([]);
