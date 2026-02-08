@@ -128,11 +128,11 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
         />
       </div>
 
-      {/* Mobile background size adjustment */}
+      {/* Mobile background size adjustment - more zoom for full coverage */}
       <style>{`
         @media (max-width: 768px) {
           .services-bg {
-            background-size: 110% !important;
+            background-size: 160% !important;
           }
         }
       `}</style>
