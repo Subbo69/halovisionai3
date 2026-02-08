@@ -56,8 +56,9 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
     },
     {
       icon: Lightbulb,
-      title: t.examples,
-      description: t.examplesDesc,
+      title: t.exampleAgents,
+      description: t.exampleAgentsDesc,
+      examples: t.exampleAgentsList,
       context: 'examples',
     },
   ];
@@ -179,13 +180,26 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
                 <div
                   className={`
                     overflow-hidden
-                    transition-[max-height] duration-300a
-                    ${isExpanded ? 'max-h-96 mt-4' : 'max-h-0'}
+                    transition-[max-height] duration-300
+                    ${isExpanded ? 'max-h-[600px] mt-4' : 'max-h-0'}
                   `}
                 >
-                  <p className="text-white/90 mb-4 leading-relaxed drop-shadow-sm text-sm md:text-base">
-                    {service.description}
-                  </p>
+                  {service.description && (
+                    <p className="text-white/90 mb-3 leading-relaxed drop-shadow-sm text-sm md:text-base">
+                      {service.description}
+                    </p>
+                  )}
+
+                  {service.examples && (
+                    <ul className="text-white/90 mb-4 leading-relaxed drop-shadow-sm text-sm md:text-base space-y-1.5">
+                      {service.examples.map((example, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-white/70 mt-1">•</span>
+                          <span>{example}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
 
                   <button
                     onClick={(e) => {
