@@ -66,13 +66,13 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
       // First animation: wait 3 seconds
       const firstTimer = setTimeout(() => {
         runAnimation();
-      }, 3000);
+      }, 2300);
       timersRef.current.push(firstTimer);
 
       // Second animation: after 30 seconds (3s initial + 30s = 33s total)
       const secondTimer = setTimeout(() => {
         runAnimation();
-      }, 33000);
+      }, 25000);
       timersRef.current.push(secondTimer);
 
       // Third animation and beyond: every 3 minutes after the second one
