@@ -1,22 +1,28 @@
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { translations, Language } from '../utils/translations';
 import { useEffect, useRef } from 'react';
+
 interface HeroProps {
   onBookingClick: () => void;
   onAskAIClick: () => void;
   language: Language;
 }
+
 export default function Hero({ onBookingClick, onAskAIClick, language }: HeroProps) {
   const t = translations[language];
   const bgRef = useRef<HTMLDivElement>(null);
+
   /* 🔁 PARALLAX EFFECT */
   useEffect(() => {
     const handleScroll = () => {
       if (!bgRef.current) return;
-      bgRef.current.style.transform = translateY(${window.scrollY * 0.75}px);
+      bgRef.current.style.transform = `translateY(${window.scrollY * 0.75}px)`;
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-36 md:pt-40 pb-16 overflow-hidden">
       {/* Shared Background */}
@@ -30,13 +36,16 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
           backgroundPosition: 'center',
         }}
       />
+
       <div className="relative max-w-7xl mx-auto px-4 md:px-6 w-full text-center flex flex-col items-center">
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight text-white mt-10 drop-shadow-lg">
           {t.heroTitle}
         </h1>
+
         <p className="text-xl md:text-2xl text-white/90 max-w-3xl mb-14 drop-shadow-md">
           {t.heroSubtitle}
         </p>
+
         {/* 🎥 VIDEO — 7% smaller */}
         <div className="w-full mb-12 mt-6" style={{ maxWidth: '93%' }}>
           <div
@@ -54,6 +63,7 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
             />
           </div>
         </div>
+
         <div className="flex justify-center mb-6 w-full">
           <button
             onClick={onBookingClick}
@@ -63,6 +73,7 @@ export default function Hero({ onBookingClick, onAskAIClick, language }: HeroPro
             <ArrowRight className="w-5 h-5" />
           </button>
         </div>
+
         <button
           onClick={onAskAIClick}
           className="text-white flex items-center gap-2 hover:text-white/70 transition-colors text-[130%] drop-shadow"
