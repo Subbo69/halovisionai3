@@ -17,13 +17,16 @@ export const translations = {
       "We design AI agents tailored to your workflows to save time, boost productivity, and drive growth.",
     leadGeneration: "Lead Generation",
     leadGenerationDesc:
-      "Automated 24/7 solutions for generating leads, tracking prospects, and keeping your sales pipeline flowing efficiently.",
+      "Never miss an opportunity. Our automated 24/7 lead generation solutions continuously identify, track, and qualify prospects while keeping your sales pipeline flowing efficiently. Turn cold leads into warm conversations without lifting a finger.",
     customSolutions: "Custom Solutions",
     customSolutionsDesc:
       "We master AI automation tools and deeply understand your unique business challenges. Every solution is tailored precisely to your needs, ensuring seamless integration with your existing workflows and maximum impact on your bottom line.",
     saveTime: "Skyrocket Productivity",
     saveTimeDesc:
       "Time is money. Eliminate repetitive tasks and reclaim hundreds of hours annually. Let AI handle the busywork while your team focuses on high-value activities that drive revenue and scale your business faster.",
+    examples: "Examples",
+    examplesDesc:
+      "From customer support agents that handle inquiries 24/7, to sales automation that qualifies leads instantly, content creation assistants, data analysis agents, appointment scheduling bots, inventory management systems, and personalized marketing agents—the possibilities are endless. We build AI agents for any business process.",
     whyUsTitle: "Why Us",
     reasons: [
       "New-gen approach",
@@ -104,6 +107,11 @@ export const translations = {
         "How much time can I save with AI automation?",
         "Which tasks can be fully automated?",
         "How does automation make my business more efficient?"
+      ],
+      "examples": [
+        "What are some examples of AI agents you've built?",
+        "Can you show me real use cases of AI automation?",
+        "What types of AI agents work best for my industry?"
       ]
     }
   },
@@ -127,13 +135,16 @@ export const translations = {
       "Wir entwickeln KI-Agenten, die genau auf deine Abläufe zugeschnitten sind, um Zeit zu sparen, Produktivität zu steigern und Wachstum zu fördern.",
     leadGeneration: "Lead-Generierung",
     leadGenerationDesc:
-      "Automatisierte 24/7-Lösungen für die Leadgenerierung, Nachverfolgung von Interessenten und einen reibungslos fließenden Vertriebspipeline.",
+      "Verpasse keine Gelegenheit. Unsere automatisierten 24/7-Leadgenerierungslösungen identifizieren, verfolgen und qualifizieren kontinuierlich Interessenten und halten deine Vertriebspipeline am Laufen. Verwandle kalte Leads in warme Gespräche, ohne einen Finger zu rühren.",
     customSolutions: "Maßgeschneiderte Lösungen",
     customSolutionsDesc:
       "Wir beherrschen KI-Automatisierungstools und verstehen deine einzigartigen geschäftlichen Herausforderungen. Jede Lösung wird präzise auf deine Bedürfnisse zugeschnitten, um nahtlose Integration in bestehende Workflows und maximale Wirkung auf dein Geschäftsergebnis zu gewährleisten.",
     saveTime: "Produktivität steigern",
     saveTimeDesc:
       "Zeit ist Geld. Eliminiere wiederkehrende Aufgaben und gewinne hunderte Stunden jährlich zurück. Lass KI die Routinearbeit erledigen, während dein Team sich auf wertschöpfende Aktivitäten konzentriert, die Umsatz generieren und dein Unternehmen schneller skalieren.",
+    examples: "Beispiele",
+    examplesDesc:
+      "Von Kundensupport-Agenten, die 24/7 Anfragen bearbeiten, über Sales-Automatisierung zur sofortigen Lead-Qualifizierung, Content-Erstellungsassistenten, Datenanalyse-Agenten, Terminplanungs-Bots, Lagerverwaltungssysteme bis hin zu personalisierten Marketing-Agenten—die Möglichkeiten sind endlos. Wir entwickeln KI-Agenten für jeden Geschäftsprozess.",
     whyUsTitle: "Warum Wir",
     reasons: [
       "Neue-Gen-Ansatz",
@@ -194,7 +205,34 @@ export const translations = {
       "Hi, ich bin der automatisierte HaloVisionAI-Agent. Frag mich alles!",
     chatSub: "Kundenservice",
     chatInputPlaceholder: "Irgendwelche Fragen?",
-    suggestions: "Vorschläge"
+    suggestions: "Vorschläge",
+    chatRecommendations: {
+      general: [
+        "Welche KI-Lösungen können mein Geschäft verbessern?",
+        "Wie kann KI meine Arbeitsabläufe optimieren?",
+        "Wie starte ich mit KI für mein Unternehmen?"
+      ],
+      "lead-generation": [
+        "Was ist Lead-Generierung und warum ist sie wichtig?",
+        "Wie automatisiert KI die Lead-Generierung 24/7?",
+        "Könnt ihr mir helfen, automatisch mehr Leads zu gewinnen?"
+      ],
+      "custom-solutions": [
+        "Wie passt ihr KI-Lösungen an mein Unternehmen an?",
+        "Welche Geschäftsprobleme kann KI-Automatisierung lösen?",
+        "Könnt ihr KI in meine bestehenden Systeme integrieren?"
+      ],
+      "save-time": [
+        "Wie viel Zeit kann ich mit KI-Automatisierung sparen?",
+        "Welche Aufgaben können vollständig automatisiert werden?",
+        "Wie macht Automatisierung mein Unternehmen effizienter?"
+      ],
+      "examples": [
+        "Was sind Beispiele für KI-Agenten, die ihr entwickelt habt?",
+        "Könnt ihr mir echte Anwendungsfälle von KI-Automatisierung zeigen?",
+        "Welche KI-Agenten funktionieren am besten für meine Branche?"
+      ]
+    }
   },
 
   fr: {
@@ -216,13 +254,16 @@ export const translations = {
       "Nous concevons des agents IA adaptés à vos processus pour gagner du temps, augmenter la productivité et stimuler la croissance.",
     leadGeneration: "Génération de leads",
     leadGenerationDesc:
-      "Solutions automatisées 24/7 pour générer des leads et suivre les prospects efficacement.",
+      "Ne manquez aucune opportunité. Nos solutions automatisées de génération de leads 24/7 identifient, suivent et qualifient en continu les prospects tout en maintenant votre pipeline de vente fluide. Transformez les leads froids en conversations chaleureuses sans lever le petit doigt.",
     customSolutions: "Solutions personnalisées",
     customSolutionsDesc:
       "Nous maîtrisons les outils d'automatisation IA et comprenons profondément vos défis commerciaux uniques. Chaque solution est adaptée précisément à vos besoins pour une intégration transparente et un impact maximal sur vos résultats.",
     saveTime: "Augmenter la productivité",
     saveTimeDesc:
       "Le temps, c'est de l'argent. Éliminez les tâches répétitives et récupérez des centaines d'heures par an. Laissez l'IA gérer le travail routinier pendant que votre équipe se concentre sur les activités à forte valeur ajoutée qui génèrent des revenus et accélèrent la croissance.",
+    examples: "Exemples",
+    examplesDesc:
+      "Des agents de support client qui traitent les demandes 24/7, à l'automatisation des ventes qui qualifie instantanément les leads, assistants de création de contenu, agents d'analyse de données, bots de planification de rendez-vous, systèmes de gestion des stocks, et agents marketing personnalisés—les possibilités sont infinies. Nous créons des agents IA pour tout processus commercial.",
     whyUsTitle: "Pourquoi nous",
     testimonialsTitle: "Témoignages",
     clientReviewsTitle: "Avis clients",
@@ -234,7 +275,39 @@ export const translations = {
       "Je suis Jayden Mikus, basé au Liechtenstein, spécialisé en automatisation IA.",
     workWithUs: "Travaillez avec nous",
     workWithUsDesc: "Commencez par un appel gratuit de 30 minutes.",
-    bookCall: "Réservez votre appel gratuit"
+    bookCall: "Réservez votre appel gratuit",
+    chatGreeting:
+      "Bonjour, je suis l'agent automatisé HaloVisionAI. Posez-moi vos questions!",
+    chatSub: "Support client",
+    chatInputPlaceholder: "Des questions?",
+    suggestions: "Suggestions",
+    chatRecommendations: {
+      general: [
+        "Quelles solutions IA peuvent booster mon entreprise?",
+        "Comment l'IA peut-elle optimiser mes processus?",
+        "Comment démarrer avec l'IA pour mon entreprise?"
+      ],
+      "lead-generation": [
+        "Qu'est-ce que la génération de leads et pourquoi est-ce important?",
+        "Comment l'IA automatise-t-elle la génération de leads 24/7?",
+        "Pouvez-vous m'aider à attirer et qualifier plus de leads automatiquement?"
+      ],
+      "custom-solutions": [
+        "Comment personnalisez-vous les solutions IA pour mon entreprise?",
+        "Quels problèmes commerciaux l'automatisation IA peut-elle résoudre?",
+        "Pouvez-vous intégrer l'IA à mes systèmes existants?"
+      ],
+      "save-time": [
+        "Combien de temps puis-je économiser avec l'automatisation IA?",
+        "Quelles tâches peuvent être entièrement automatisées?",
+        "Comment l'automatisation rend-elle mon entreprise plus efficace?"
+      ],
+      "examples": [
+        "Quels sont des exemples d'agents IA que vous avez créés?",
+        "Pouvez-vous me montrer des cas d'usage réels d'automatisation IA?",
+        "Quels types d'agents IA fonctionnent le mieux pour mon secteur?"
+      ]
+    }
   }
 };
 
