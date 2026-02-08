@@ -39,8 +39,6 @@ export const translations = {
       "Review management & response automation",
       "Patient/client follow-up sequences",
       "Personalized marketing campaigns",
-      "Data analysis & reporting agents",
-      "Content creation assistants",
     ],
 
     whyUsTitle: "Why Us",
@@ -179,8 +177,6 @@ export const translations = {
       "Bewertungsmanagement & automatische Antworten",
       "Patienten-/Kundennachverfolgung",
       "Personalisierte Marketing-Kampagnen",
-      "Datenanalyse & Reporting-Agenten",
-      "Content-Erstellungsassistenten",
     ],
 
     whyUsTitle: "Warum Wir",
@@ -320,8 +316,6 @@ export const translations = {
       "Gestion des avis & réponses automatisées",
       "Suivi des patients/clients",
       "Campagnes marketing personnalisées",
-      "Agents d'analyse de données & rapports",
-      "Assistants de création de contenu",
     ],
 
     whyUsTitle: "Pourquoi nous",
