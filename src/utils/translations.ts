@@ -18,12 +18,9 @@ export const translations = {
     leadGeneration: "Lead Generation",
     leadGenerationDesc:
       "Automated 24/7 solutions for generating leads, tracking prospects, and keeping your sales pipeline flowing efficiently.",
-    customerEngagement: "Customer Engagement",
-    customerEngagementDesc:
-      "Create meaningful, automated interactions with your clients to improve satisfaction, retention, and brand trust.",
-    marketingAutomation: "Marketing Automation",
-    marketingAutomationDesc:
-      "Automate campaigns, segment audiences, and run intelligent promotions to increase reach and conversions.",
+    customSolutions: "Custom Solutions",
+    customSolutionsDesc:
+      "We master AI automation tools and deeply understand your unique business challenges. Every solution is tailored precisely to your needs, ensuring seamless integration with your existing workflows and maximum impact on your bottom line.",
     saveTime: "Skyrocket Productivity",
     saveTimeDesc:
       "Time is money. Eliminate repetitive tasks and reclaim hundreds of hours annually. Let AI handle the busywork while your team focuses on high-value activities that drive revenue and scale your business faster.",
@@ -98,15 +95,10 @@ export const translations = {
         "How does AI automate lead generation 24/7?",
         "Can you help me attract and qualify more leads automatically?"
       ],
-      "customer-engagement": [
-        "What is customer engagement and why is it important?",
-        "How can I automate meaningful conversations with clients?",
-        "Can AI improve my customer support efficiency?"
-      ],
-      "marketing-automation": [
-        "What is custom marketing automation and how does it work?",
-        "How can AI optimize my campaigns in real-time?",
-        "Can you automate my email and social media marketing?"
+      "custom-solutions": [
+        "How do you customize AI solutions to my business?",
+        "What business problems can AI automation solve?",
+        "Can you integrate AI with my existing systems?"
       ],
       "save-time": [
         "How much time can I save with AI automation?",
@@ -136,12 +128,9 @@ export const translations = {
     leadGeneration: "Lead-Generierung",
     leadGenerationDesc:
       "Automatisierte 24/7-Lösungen für die Leadgenerierung, Nachverfolgung von Interessenten und einen reibungslos fließenden Vertriebspipeline.",
-    customerEngagement: "Kundenbindung",
-    customerEngagementDesc:
-      "Automatisiere sinnvolle Interaktionen mit deinen Kunden, um Zufriedenheit, Bindung und Vertrauen zu stärken.",
-    marketingAutomation: "Marketing-Automatisierung",
-    marketingAutomationDesc:
-      "Automatisiere Kampagnen, segmentiere Zielgruppen und führe intelligente Aktionen durch, um Reichweite und Conversions zu steigern.",
+    customSolutions: "Maßgeschneiderte Lösungen",
+    customSolutionsDesc:
+      "Wir beherrschen KI-Automatisierungstools und verstehen deine einzigartigen geschäftlichen Herausforderungen. Jede Lösung wird präzise auf deine Bedürfnisse zugeschnitten, um nahtlose Integration in bestehende Workflows und maximale Wirkung auf dein Geschäftsergebnis zu gewährleisten.",
     saveTime: "Produktivität steigern",
     saveTimeDesc:
       "Zeit ist Geld. Eliminiere wiederkehrende Aufgaben und gewinne hunderte Stunden jährlich zurück. Lass KI die Routinearbeit erledigen, während dein Team sich auf wertschöpfende Aktivitäten konzentriert, die Umsatz generieren und dein Unternehmen schneller skalieren.",
@@ -227,13 +216,10 @@ export const translations = {
       "Nous concevons des agents IA adaptés à vos processus pour gagner du temps, augmenter la productivité et stimuler la croissance.",
     leadGeneration: "Génération de leads",
     leadGenerationDesc:
-      "Solutions automatisées 24/7 pour générer des leads et suivre les prospects.",
-    customerEngagement: "Engagement client",
-    customerEngagementDesc:
-      "Créez des interactions automatisées et pertinentes avec vos clients.",
-    marketingAutomation: "Automatisation du marketing",
-    marketingAutomationDesc:
-      "Automatisez les campagnes et optimisez les conversions.",
+      "Solutions automatisées 24/7 pour générer des leads et suivre les prospects efficacement.",
+    customSolutions: "Solutions personnalisées",
+    customSolutionsDesc:
+      "Nous maîtrisons les outils d'automatisation IA et comprenons profondément vos défis commerciaux uniques. Chaque solution est adaptée précisément à vos besoins pour une intégration transparente et un impact maximal sur vos résultats.",
     saveTime: "Augmenter la productivité",
     saveTimeDesc:
       "Le temps, c'est de l'argent. Éliminez les tâches répétitives et récupérez des centaines d'heures par an. Laissez l'IA gérer le travail routinier pendant que votre équipe se concentre sur les activités à forte valeur ajoutée qui génèrent des revenus et accélèrent la croissance.",
