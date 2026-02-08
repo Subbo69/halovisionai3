@@ -108,7 +108,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
       {/* Shared Background for seamless effect */}
       <div className="absolute inset-0 w-full h-full z-[-1]">
         <div
-          className="absolute inset-0 w-full h-full transition-transform duration-75 ease-out"
+          className="services-bg absolute inset-0 w-full h-full transition-transform duration-75 ease-out"
           style={{
             backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
             backgroundRepeat: 'no-repeat',
@@ -119,14 +119,23 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
           }}
         />
         
-        {/* Smooth Black gradient overlay */}
+        {/* Lighter Black gradient overlay - 20% less dark */}
         <div
           className="absolute inset-0 w-full h-full"
           style={{
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.35) 10%, rgba(0,0,0,0.4) 20%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.8) 75%, rgba(0,0,0,0.9) 85%, rgba(0,0,0,0.95) 92%, rgba(0,0,0,1) 100%)',
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.28) 10%, rgba(0,0,0,0.32) 20%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.48) 45%, rgba(0,0,0,0.56) 60%, rgba(0,0,0,0.64) 75%, rgba(0,0,0,0.72) 85%, rgba(0,0,0,0.76) 92%, rgba(0,0,0,0.8) 100%)',
           }}
         />
       </div>
+
+      {/* Mobile background size adjustment */}
+      <style>{`
+        @media (max-width: 768px) {
+          .services-bg {
+            background-size: 110% !important;
+          }
+        }
+      `}</style>
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-6">
         <div className="text-center mb-8 md:mb-16">
