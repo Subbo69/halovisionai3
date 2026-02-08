@@ -10,51 +10,110 @@ interface WorkWithUsProps {
 export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps) {
   const t = translations[language];
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [animationProgress, setAnimationProgress] = useState(-90);
   const [lightOpacity, setLightOpacity] = useState(0);
+  const [animationCount, setAnimationCount] = useState(0);
+  const timersRef = useRef<NodeJS.Timeout[]>([]);
 
-  // Intersection Observer to trigger animation on scroll
+  // Animation function
+  const runAnimation = () => {
+    let startTime: number | null = null;
+    const duration = 3294; // 170% speed (5600 / 1.7 ≈ 3294ms)
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Smoother ease in-out for better acceleration/deceleration
+      const eased = progress < 0.5 
+        ? 4 * progress * progress * progress 
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      
+      // Opacity control: fade in at start, fade out at end (going into button)
+      if (progress < 0.05) {
+        // Fade in during first 5%
+        setLightOpacity(progress / 0.05);
+      } else if (progress > 0.92) {
+        // Fade out during last 8% (smooth disappear into button)
+        setLightOpacity((1 - progress) / 0.08);
+      } else {
+        setLightOpacity(1);
+      }
+      
+      // Start from -90deg (top) and complete one full rotation
+      setAnimationProgress(-90 + (eased * 360));
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        // Animation complete, increment counter
+        setAnimationCount(prev => prev + 1);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  };
+
+  // Schedule animations based on timing rules
+  useEffect(() => {
+    // Clear any existing timers
+    timersRef.current.forEach(timer => clearTimeout(timer));
+    timersRef.current = [];
+
+    if (isVisible) {
+      // First animation: wait 3 seconds
+      const firstTimer = setTimeout(() => {
+        runAnimation();
+      }, 3000);
+      timersRef.current.push(firstTimer);
+
+      // Second animation: after 30 seconds (3s initial + 30s = 33s total)
+      const secondTimer = setTimeout(() => {
+        runAnimation();
+      }, 33000);
+      timersRef.current.push(secondTimer);
+
+      // Third animation and beyond: every 3 minutes after the second one
+      // (3s + 30s + 3min = 213s total for third)
+      const scheduleRecurringAnimations = () => {
+        const thirdTimer = setTimeout(() => {
+          runAnimation();
+          
+          // Continue every 3 minutes
+          const recurringInterval = setInterval(() => {
+            runAnimation();
+          }, 180000); // 3 minutes
+
+          // Store interval ID for cleanup (cast to NodeJS.Timeout)
+          timersRef.current.push(recurringInterval as unknown as NodeJS.Timeout);
+        }, 213000); // 3s + 30s + 3min
+        timersRef.current.push(thirdTimer);
+      };
+
+      scheduleRecurringAnimations();
+    }
+
+    return () => {
+      timersRef.current.forEach(timer => clearTimeout(timer));
+      timersRef.current = [];
+    };
+  }, [isVisible]);
+
+  // Intersection Observer to detect visibility
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            setHasAnimated(true);
-            // Start animation
-            let startTime: number | null = null;
-            const duration = 3294; // 170% speed (5600 / 1.7 ≈ 3294ms)
-
-            const animate = (timestamp: number) => {
-              if (!startTime) startTime = timestamp;
-              const elapsed = timestamp - startTime;
-              const progress = Math.min(elapsed / duration, 1);
-              
-              // Smoother ease in-out for better acceleration/deceleration
-              const eased = progress < 0.5 
-                ? 4 * progress * progress * progress 
-                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-              
-              // Opacity control: fade in at start, fade out at end (going into button)
-              if (progress < 0.05) {
-                // Fade in during first 5%
-                setLightOpacity(progress / 0.05);
-              } else if (progress > 0.92) {
-                // Fade out during last 8% (smooth disappear into button)
-                setLightOpacity((1 - progress) / 0.08);
-              } else {
-                setLightOpacity(1);
-              }
-              
-              // Start from -90deg (top) and complete one full rotation
-              setAnimationProgress(-90 + (eased * 360));
-
-              if (progress < 1) {
-                requestAnimationFrame(animate);
-              }
-            };
-
-            requestAnimationFrame(animate);
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          } else {
+            setIsVisible(false);
+            // Reset animation count when leaving viewport
+            setAnimationCount(0);
+            setLightOpacity(0);
+            setAnimationProgress(-90);
           }
         });
       },
@@ -72,7 +131,7 @@ export default function WorkWithUs({ onBookingClick, language }: WorkWithUsProps
         observer.unobserve(sectionRef.current);
       }
     };
-  }, [hasAnimated]);
+  }, []);
 
   return (
     <section ref={sectionRef} className="relative py-32 bg-black text-white">
