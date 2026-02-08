@@ -24,9 +24,19 @@ export const translations = {
     saveTime: "Skyrocket Productivity",
     saveTimeDesc:
       "Time is money. Eliminate repetitive tasks and reclaim hundreds of hours annually. Let AI handle the busywork while your team focuses on high-value activities that drive revenue and scale your business faster.",
-    examples: "Examples",
-    examplesDesc:
-      "From customer support agents that handle inquiries 24/7, to sales automation that qualifies leads instantly, content creation assistants, data analysis agents, appointment scheduling bots, inventory management systems, and personalized marketing agents—the possibilities are endless. We build AI agents for any business process.",
+    exampleAgents: "Example Agents",
+    exampleAgentsDesc:
+      "The possibilities are endless. We build AI agents for any business process:",
+    exampleAgentsList: [
+      "24/7 customer support agents handling inquiries instantly",
+      "Appointment scheduling & reminder systems",
+      "Sales automation qualifying leads in real-time",
+      "Review management & response automation",
+      "Patient/client follow-up sequences",
+      "Personalized marketing campaigns",
+      "Data analysis & reporting agents",
+      "Content creation assistants"
+    ],
     whyUsTitle: "Why Us",
     reasons: [
       "New-gen approach",
@@ -142,9 +152,19 @@ export const translations = {
     saveTime: "Produktivität steigern",
     saveTimeDesc:
       "Zeit ist Geld. Eliminiere wiederkehrende Aufgaben und gewinne hunderte Stunden jährlich zurück. Lass KI die Routinearbeit erledigen, während dein Team sich auf wertschöpfende Aktivitäten konzentriert, die Umsatz generieren und dein Unternehmen schneller skalieren.",
-    examples: "Beispiele",
-    examplesDesc:
-      "Von Kundensupport-Agenten, die 24/7 Anfragen bearbeiten, über Sales-Automatisierung zur sofortigen Lead-Qualifizierung, Content-Erstellungsassistenten, Datenanalyse-Agenten, Terminplanungs-Bots, Lagerverwaltungssysteme bis hin zu personalisierten Marketing-Agenten—die Möglichkeiten sind endlos. Wir entwickeln KI-Agenten für jeden Geschäftsprozess.",
+    exampleAgents: "Beispiel-Agenten",
+    exampleAgentsDesc:
+      "Die Möglichkeiten sind endlos. Wir entwickeln KI-Agenten für jeden Geschäftsprozess:",
+    exampleAgentsList: [
+      "24/7 Kundensupport-Agenten für sofortige Anfragen",
+      "Terminplanung & automatische Erinnerungen",
+      "Sales-Automatisierung zur Echtzeit-Lead-Qualifizierung",
+      "Bewertungsmanagement & automatische Antworten",
+      "Patienten-/Kundennachverfolgung",
+      "Personalisierte Marketing-Kampagnen",
+      "Datenanalyse & Reporting-Agenten",
+      "Content-Erstellungsassistenten"
+    ],
     whyUsTitle: "Warum Wir",
     reasons: [
       "Neue-Gen-Ansatz",
@@ -261,9 +281,19 @@ export const translations = {
     saveTime: "Augmenter la productivité",
     saveTimeDesc:
       "Le temps, c'est de l'argent. Éliminez les tâches répétitives et récupérez des centaines d'heures par an. Laissez l'IA gérer le travail routinier pendant que votre équipe se concentre sur les activités à forte valeur ajoutée qui génèrent des revenus et accélèrent la croissance.",
-    examples: "Exemples",
-    examplesDesc:
-      "Des agents de support client qui traitent les demandes 24/7, à l'automatisation des ventes qui qualifie instantanément les leads, assistants de création de contenu, agents d'analyse de données, bots de planification de rendez-vous, systèmes de gestion des stocks, et agents marketing personnalisés—les possibilités sont infinies. Nous créons des agents IA pour tout processus commercial.",
+    exampleAgents: "Exemples d'agents",
+    exampleAgentsDesc:
+      "Les possibilités sont infinies. Nous créons des agents IA pour tout processus commercial:",
+    exampleAgentsList: [
+      "Support client 24/7 traitant les demandes instantanément",
+      "Planification de rendez-vous & rappels automatiques",
+      "Automatisation des ventes qualifiant les leads en temps réel",
+      "Gestion des avis & réponses automatisées",
+      "Suivi des patients/clients",
+      "Campagnes marketing personnalisées",
+      "Agents d'analyse de données & rapports",
+      "Assistants de création de contenu"
+    ],
     whyUsTitle: "Pourquoi nous",
     testimonialsTitle: "Témoignages",
     clientReviewsTitle: "Avis clients",
