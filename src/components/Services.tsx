@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import {
   TrendingUp,
-  MessageSquare,
-  BarChart3,
-  Clock,
+  Rocket,
   Sparkles,
   ChevronDown,
+  Wrench,
 } from 'lucide-react';
 import { translations, Language } from '../utils/translations';
 
@@ -37,28 +36,22 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
 
   const services = [
     {
+      icon: Rocket,
+      title: t.saveTime,
+      description: t.saveTimeDesc,
+      context: 'save-time',
+    },
+    {
+      icon: Wrench,
+      title: t.customSolutions,
+      description: t.customSolutionsDesc,
+      context: 'custom-solutions',
+    },
+    {
       icon: TrendingUp,
       title: t.leadGeneration,
       description: t.leadGenerationDesc,
       context: 'lead-generation',
-    },
-    {
-      icon: MessageSquare,
-      title: t.customerEngagement,
-      description: t.customerEngagementDesc,
-      context: 'customer-engagement',
-    },
-    {
-      icon: BarChart3,
-      title: t.marketingAutomation,
-      description: t.marketingAutomationDesc,
-      context: 'marketing-automation',
-    },
-    {
-      icon: Clock,
-      title: t.saveTime,
-      description: t.saveTimeDesc,
-      context: 'save-time',
     },
   ];
 
@@ -137,7 +130,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 items-start pb-8 md:pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 items-start pb-8 md:pb-12">
           {services.map((service, index) => {
             const Icon = service.icon;
             const isExpanded = expandedCards.has(index);
