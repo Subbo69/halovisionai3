@@ -225,13 +225,11 @@ export default function Testimonials() {
                   </div>
                 </div>
 
-                {/* Review text with 3-line clamp and fade effect */}
-                <div className="relative mb-2.5">
+                {/* Review text with 3-line clamp */}
+                <div className="mb-2.5">
                   <p className="text-gray-200 text-[11px] leading-[1.4] line-clamp-3">
                     {review.review}
                   </p>
-                  {/* Fade gradient that matches the card background */}
-                  <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-white/10 via-white/7 to-transparent pointer-events-none" />
                 </div>
 
                 <div className="flex gap-0.5">
