@@ -20,10 +20,9 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
   const [longMessagesSent, setLongMessagesSent] = useState(0);
   const [limitWarning, setLimitWarning] = useState<string | null>(null);
 
-  // Animation states
+  // Animation states - simple fade
   const [isVisible, setIsVisible] = useState(true);
-  const [animationProgress, setAnimationProgress] = useState(-90);
-  const [lightOpacity, setLightOpacity] = useState(0);
+  const [buttonBrightness, setButtonBrightness] = useState(0); // 0 = normal, 1 = fully bright white
   const timersRef = useRef<NodeJS.Timeout[]>([]);
 
   const chatRef = useRef<HTMLDivElement>(null);
@@ -71,34 +70,32 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
 
-  // Animation function
-  const runAnimation = () => {
+  // Simple fade animation
+  const runFadeAnimation = () => {
     let startTime: number | null = null;
-    const duration = 3294; // 170% speed
+    const duration = 2000; // 2 seconds total (1s fade in, 1s fade out)
 
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Smoother ease in-out
-      const eased = progress < 0.5 
-        ? 4 * progress * progress * progress 
-        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-      
-      // Opacity control
-      if (progress < 0.05) {
-        setLightOpacity(progress / 0.05);
-      } else if (progress > 0.92) {
-        setLightOpacity((1 - progress) / 0.08);
+      // Create a fade in and fade out effect
+      let brightness;
+      if (progress < 0.5) {
+        // First half: fade in (0 to 1)
+        brightness = progress * 2; // 0 -> 1
       } else {
-        setLightOpacity(1);
+        // Second half: fade out (1 to 0)
+        brightness = (1 - progress) * 2; // 1 -> 0
       }
       
-      setAnimationProgress(-90 + (eased * 360));
+      setButtonBrightness(brightness);
 
       if (progress < 1) {
         requestAnimationFrame(animate);
+      } else {
+        setButtonBrightness(0); // Ensure we end at 0
       }
     };
 
@@ -113,23 +110,23 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
     if (isVisible && !isOpen) {
       // First animation: 2.3s
       const firstTimer = setTimeout(() => {
-        runAnimation();
+        runFadeAnimation();
       }, 2300);
       timersRef.current.push(firstTimer);
 
       // Second animation: 27s
       const secondTimer = setTimeout(() => {
-        runAnimation();
+        runFadeAnimation();
       }, 27000);
       timersRef.current.push(secondTimer);
 
       // Recurring every 70s after third
       const scheduleRecurring = () => {
         const thirdTimer = setTimeout(() => {
-          runAnimation();
+          runFadeAnimation();
           
           const recurringInterval = setInterval(() => {
-            runAnimation();
+            runFadeAnimation();
           }, 70000);
 
           timersRef.current.push(recurringInterval as unknown as NodeJS.Timeout);
@@ -268,48 +265,23 @@ export default function ChatBot({ context, onContextUsed, language }: ChatBotPro
     <>
       <link href="https://fonts.cdnfonts.com/css/anurati" rel="stylesheet" />
 
-      {/* OPEN BUTTON with THIN ANIMATION */}
-      <div className="fixed bottom-6 left-6 z-50">
-        {/* Thin shooting star animation */}
-        <div 
-          className="absolute inset-0 rounded-full pointer-events-none"
-          style={{
-            padding: '1px',
-            transform: 'scale(1.03)',
-          }}
-        >
-          {/* Thin bright head */}
-          <div
-            className="absolute w-full h-full rounded-full"
-            style={{
-              background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 88%, rgba(255,255,255,0.15) 90%, rgba(255,255,255,0.5) 91%, #ffffff 91.5%, #ffffff 92%, rgba(255,255,255,0.5) 92.5%, rgba(255,255,255,0.15) 93%, transparent 95%)`,
-              filter: 'blur(0.2px)',
-              opacity: lightOpacity,
-            }}
-          />
-          {/* Extra thin glow */}
-          <div
-            className="absolute w-full h-full rounded-full"
-            style={{
-              background: `conic-gradient(from ${animationProgress}deg, transparent 0%, transparent 90%, rgba(255,255,255,0.7) 91.5%, #ffffff 92%, rgba(255,255,255,0.7) 92.5%, transparent 94%)`,
-              filter: 'blur(0px)',
-              opacity: lightOpacity * 0.8,
-            }}
-          />
-        </div>
-
-        <button
-          ref={buttonRef}
-          onClick={toggleChat}
-          className="relative flex items-center gap-2 rounded-full
-                     px-4 py-3 border border-white text-white
-                     backdrop-blur-sm transition-all hover:scale-110 font-semibold"
-          aria-label={t.askHaloAI}
-        >
-          <MessageSquare className="w-6 h-6" />
-          <span>{t.askHaloAI || 'Ask Halo AI'}</span>
-        </button>
-      </div>
+      {/* OPEN BUTTON with FADE ANIMATION */}
+      <button
+        ref={buttonRef}
+        onClick={toggleChat}
+        className="fixed bottom-6 left-6 z-50 flex items-center gap-2 rounded-full
+                   px-4 py-3 border border-white
+                   backdrop-blur-sm transition-all hover:scale-110 font-semibold"
+        style={{
+          backgroundColor: `rgba(255, 255, 255, ${buttonBrightness * 0.9})`,
+          color: buttonBrightness > 0.5 ? '#000000' : '#ffffff',
+          transition: 'background-color 0.3s ease, color 0.3s ease',
+        }}
+        aria-label={t.askHaloAI}
+      >
+        <MessageSquare className="w-6 h-6" />
+        <span>{t.askHaloAI || 'Ask Halo AI'}</span>
+      </button>
 
       {/* CHAT WINDOW */}
       {isOpen && (
