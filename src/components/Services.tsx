@@ -105,9 +105,8 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
         />
       </div>
 
-      {/* Mirrored Background Container */}
-      <div className="absolute inset-0 w-full h-full z-[-1] overflow-hidden">
-        {/* Original Background */}
+      {/* Shared Background for seamless effect */}
+      <div className="absolute inset-0 w-full h-full z-[-1]">
         <div
           className="services-bg absolute inset-0 w-full h-full transition-transform duration-75 ease-out"
           style={{
@@ -116,19 +115,6 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             transform: `scaleX(-1) scale(${zoomScale})`,
-            transformOrigin: 'center',
-          }}
-        />
-        
-        {/* Mirrored Background (Vertical Flip) */}
-        <div
-          className="services-bg-mirror absolute inset-0 w-full h-full transition-transform duration-75 ease-out opacity-30"
-          style={{
-            backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            transform: `scaleX(-1) scaleY(-1) scale(${zoomScale})`,
             transformOrigin: 'center',
           }}
         />
@@ -142,12 +128,11 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
         />
       </div>
 
-      {/* Mobile background size adjustment - 150% zoom */}
+      {/* Mobile background size adjustment - more zoom for full coverage */}
       <style>{`
         @media (max-width: 768px) {
-          .services-bg,
-          .services-bg-mirror {
-            background-size: 150% !important;
+          .services-bg {
+            background-size: 400% !important;
           }
         }
       `}</style>
