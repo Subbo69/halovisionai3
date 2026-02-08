@@ -132,7 +132,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
       <style>{`
         @media (max-width: 768px) {
           .services-bg {
-            background-size: 300% !important;
+            background-size: 200% !important;
           }
         }
       `}</style>
