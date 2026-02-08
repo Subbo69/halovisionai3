@@ -225,12 +225,10 @@ export default function Testimonials() {
                   </div>
                 </div>
 
-                {/* Review text with 3-line clamp */}
-                <div className="mb-2.5">
-                  <p className="text-gray-200 text-[11px] leading-[1.4] line-clamp-3">
-                    {review.review}
-                  </p>
-                </div>
+                {/* Review text - 2 lines on mobile, 3 lines on desktop, no fade */}
+                <p className="text-gray-200 text-xs md:text-[13px] leading-[1.4] line-clamp-2 md:line-clamp-3 mb-2.5">
+                  {review.review}
+                </p>
 
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => (
