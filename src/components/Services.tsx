@@ -5,6 +5,7 @@ import {
   Sparkles,
   ChevronDown,
   Wrench,
+  Lightbulb,
 } from 'lucide-react';
 import { translations, Language } from '../utils/translations';
 
@@ -52,6 +53,12 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
       title: t.leadGeneration,
       description: t.leadGenerationDesc,
       context: 'lead-generation',
+    },
+    {
+      icon: Lightbulb,
+      title: t.examples,
+      description: t.examplesDesc,
+      context: 'examples',
     },
   ];
 
@@ -130,7 +137,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 items-start pb-8 md:pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 items-start pb-4 md:pb-6">
           {services.map((service, index) => {
             const Icon = service.icon;
             const isExpanded = expandedCards.has(index);
