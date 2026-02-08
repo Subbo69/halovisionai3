@@ -180,7 +180,7 @@ export default function Testimonials() {
             }}
           >
             {infiniteReviews.map((review, index) => (
-              
+              <a
                 key={index}
                 href={review.link}
                 target="_blank"
