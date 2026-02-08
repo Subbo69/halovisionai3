@@ -189,7 +189,7 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
                 <div
                   className={`
                     overflow-hidden
-                    transition-[max-height] duration-300
+                    transition-[max-height] duration-230
                     ${isExpanded ? 'max-h-[600px] mt-4' : 'max-h-0'}
                   `}
                 >
