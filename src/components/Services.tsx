@@ -18,17 +18,14 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
   const t = translations[language];
   const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [sectionScroll, setSectionScroll] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercent = (scrollTop / docHeight) * 100;
       setScrollProgress(scrollPercent);
-      
-      // Calculate zoom based on scroll position
-      setSectionScroll(scrollTop);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -76,69 +73,48 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
   };
 
   // Slower animation: complete cycle every 150% of scroll instead of 100%
-  const normalizedProgress = ((scrollProgress % 150) / 150);
+  const normalizedProgress = (scrollProgress % 150) / 150;
   let linePosition;
-  
   if (normalizedProgress < 0.5) {
     // First half: left to right (-10% to 110% to ensure full coverage)
     const progress = normalizedProgress * 2; // normalize to 0-1
-    linePosition = -10 + (easeInOutCubic(progress) * 120);
+    linePosition = -10 + easeInOutCubic(progress) * 120;
   } else {
     // Second half: right to left (110% to -10%)
     const progress = (normalizedProgress - 0.5) * 2; // normalize to 0-1
-    linePosition = 110 - (easeInOutCubic(progress) * 120);
+    linePosition = 110 - easeInOutCubic(progress) * 120;
   }
 
-  // Parallax zoom effect: zoom out as you scroll down
-  const zoomScale = 1 + (sectionScroll * 0.0003); // Subtle zoom effect
-
   return (
-    <section className="relative py-12 md:py-20 text-white overflow-hidden -mb-1">
+    <div
+      id="services"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
       {/* Animated top border line - scroll controlled */}
-      <div className="absolute top-0 left-0 w-full h-1 overflow-hidden z-10">
-        <div
-          className="absolute h-full w-40 md:w-48 bg-gradient-to-r from-transparent via-white to-transparent transition-all duration-100 ease-out"
-          style={{
-            left: `${linePosition}%`,
-            transform: 'translateX(-50%)',
-          }}
-        />
-      </div>
+      <div
+        className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-60"
+        style={{
+          left: `${linePosition}%`,
+          width: '30%',
+          transition: 'none',
+        }}
+      />
 
       {/* Shared Background for seamless effect */}
-      <div className="absolute inset-0 w-full h-full z-[-1]">
-        <div
-          className="absolute inset-0 w-full h-full transition-transform duration-75 ease-out"
-          style={{
-            backgroundImage: "url('https://images.hdqwalls.com/wallpapers/neon-half-circle-q7.jpg')",
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            transform: `scaleX(-1) scale(${zoomScale})`,
-            transformOrigin: 'center',
-          }}
-        />
-        
-        {/* Smooth Black gradient overlay */}
-        <div
-          className="absolute inset-0 w-full h-full"
-          style={{
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.35) 10%, rgba(0,0,0,0.4) 20%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.8) 75%, rgba(0,0,0,0.9) 85%, rgba(0,0,0,0.95) 92%, rgba(0,0,0,1) 100%)',
-          }}
-        />
-      </div>
+      <div className="absolute inset-0 bg-black" />
 
-      <div className="relative max-w-7xl mx-auto px-4 md:px-6">
-        <div className="text-center mb-8 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 drop-shadow-lg">
-            {t.servicesTitle}
-          </h2>
-          <p className="text-base md:text-lg lg:text-xl text-white/90 max-w-3xl mx-auto drop-shadow-sm px-4">
-            {t.servicesSubtitle}
-          </p>
-        </div>
+      {/* Smooth Black gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/80 pointer-events-none" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 items-start pb-4 md:pb-6">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 py-12 md:py-20">
+        <h2 className="text-3xl md:text-5xl font-bold mb-3 md:mb-4 text-center bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent">
+          {t.servicesTitle}
+        </h2>
+        <p className="text-sm md:text-lg text-white/60 text-center mb-8 md:mb-12 max-w-3xl mx-auto">
+          {t.servicesSubtitle}
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
             const isExpanded = expandedCards.has(index);
@@ -148,75 +124,71 @@ export default function Services({ onAskAIClick, language }: ServicesProps) {
                 key={index}
                 onClick={() => toggleCard(index)}
                 className="
-                  bg-white/10
-                  backdrop-blur-sm
-                  rounded-2xl
-                  p-5 md:p-6
-                  hover:bg-white/15
-                  transition-colors
-                  cursor-pointer
+                  bg-white/10 backdrop-blur-sm rounded-2xl p-5 md:p-6
+                  hover:bg-white/15 transition-colors cursor-pointer
                 "
               >
                 {/* HEADER ROW */}
-                <div className="flex items-start justify-between gap-3 md:gap-4">
-                  <div className="flex items-start gap-3">
-                    <Icon className="w-7 h-7 md:w-8 md:h-8 text-white flex-shrink-0" />
-                    <h3 className="text-lg md:text-xl font-bold leading-snug drop-shadow">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-3">
+                    <Icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                    <h3 className="text-base md:text-xl font-semibold text-white">
                       {service.title}
                     </h3>
                   </div>
-
-                  <div className="flex items-center gap-1 text-xs md:text-sm text-white/70 flex-shrink-0">
-                    <span>{isExpanded ? 'Close' : 'Open'}</span>
-                    <ChevronDown
-                      className={`w-4 h-4 transition-transform duration-300 ${
-                        isExpanded ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </div>
+                  <ChevronDown
+                    className={`w-5 h-5 text-white/60 transition-transform duration-300 ${
+                      isExpanded ? 'rotate-180' : ''
+                    }`}
+                  />
                 </div>
+
+                <p className="text-[10px] md:text-xs text-white/40 mb-2">
+                  {isExpanded ? 'Close' : 'Open'}
+                </p>
 
                 {/* EXPANDABLE CONTENT */}
                 <div
                   className={`
-                    overflow-hidden
-                    transition-[max-height] duration-300
-                    ${isExpanded ? 'max-h-[600px] mt-4' : 'max-h-0'}
+                    grid overflow-hidden transition-all duration-300 ease-in-out
+                    ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0'}
                   `}
                 >
-                  {service.description && (
-                    <p className="text-white/90 mb-3 leading-relaxed drop-shadow-sm text-sm md:text-base">
-                      {service.description}
-                    </p>
-                  )}
+                  <div className="overflow-hidden">
+                    {service.description && (
+                      <p className="text-xs md:text-sm text-white/70 leading-relaxed">
+                        {service.description}
+                      </p>
+                    )}
 
-                  {service.examples && (
-                    <ul className="text-white/90 mb-4 leading-relaxed drop-shadow-sm text-sm md:text-base space-y-1.5">
-                      {service.examples.map((example, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <span className="text-white/70 mt-1">•</span>
-                          <span>{example}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                    {service.examples && (
+                      <ul className="mt-3 space-y-1.5 text-[10px] md:text-xs text-white/60 leading-snug">
+                        {service.examples.map((example, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="text-white/40 mt-0.5">•</span>
+                            <span>{example}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onAskAIClick(service.context);
-                    }}
-                    className="text-xs md:text-sm flex items-center gap-2 text-white/70 hover:text-white transition-colors"
-                  >
-                    <Sparkles className="w-4 h-4" />
-                    <span>Ask Our AI Agent</span>
-                  </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onAskAIClick(service.context);
+                      }}
+                      className="text-xs md:text-sm flex items-center gap-2 text-white/70 hover:text-white transition-colors mt-4"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      {t.askAI}
+                    </button>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
